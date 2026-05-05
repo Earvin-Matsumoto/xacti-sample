@@ -1,10 +1,9 @@
-export function middleware(request) {
+export default function middleware(request) {
   const basicAuth = request.headers.get('authorization')
 
   if (basicAuth) {
     const authValue = basicAuth.split(' ')[1]
     const [user, pwd] = atob(authValue).split(':')
-
     if (user === 'xacti' && pwd === 'xacti2026') {
       return
     }
