@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ・よくあるご質問 | Xacti サポート</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: #cc1933;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo img {
+      height: 36px;
+      width: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    nav a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.85);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 4px 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    nav a:hover, nav a.active {
+      color: #fff;
+      border-bottom-color: #fff;
+    }
+    .header-contact {
+      background: #fff !important;
+      color: #cc1933 !important;
+      padding: 8px 20px !important;
+      border-bottom: none !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      border-radius: 3px;
+    }
+    .header-contact:hover {
+      background: rgba(255,255,255,0.9) !important;
+      color: #cc1933 !important;
+    }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb {
+      background: #f5f5f5;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    .breadcrumb-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #666;
+    }
+    .breadcrumb a { color: #666; text-decoration: none; }
+    .breadcrumb a:hover { color: #cc1933; }
+    .breadcrumb-sep { color: #bbb; }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      background: linear-gradient(135deg, #1a2640 0%, #2a3d5e 100%);
+      padding: 48px 24px;
+      text-align: center;
+      color: #fff;
+    }
+    .page-hero h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+    .page-hero p {
+      font-size: 15px;
+      opacity: 0.8;
+    }
+    .page-hero-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-top: 32px;
+    }
+    .page-hero-tab {
+      padding: 12px 40px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.7);
+      background: transparent;
+      transition: all 0.2s;
+    }
+    .page-hero-tab:first-child { border-radius: 4px 0 0 4px; }
+    .page-hero-tab:last-child  { border-radius: 0 4px 4px 0; border-left: none; }
+    .page-hero-tab.active {
+      background: #cc1933;
+      border-color: #cc1933;
+      color: #fff;
+    }
+    .page-hero-tab:hover:not(.active) {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    /* ─── SEARCH BAR ─── */
+    .search-section {
+      background: #fff;
+      padding: 32px 24px;
+      border-bottom: 1px solid #eee;
+    }
+    .search-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .search-label {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .search-bar {
+      display: flex;
+      border: 2px solid #cc1933;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .search-bar input {
+      flex: 1;
+      padding: 14px 18px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      font-family: inherit;
+    }
+    .search-bar button {
+      background: #cc1933;
+      color: #fff;
+      border: none;
+      padding: 0 28px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .search-bar button:hover { background: #a8142a; }
+    .search-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+      justify-content: center;
+    }
+    .search-tag {
+      font-size: 12px;
+      color: #555;
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      padding: 4px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .search-tag:hover { background: #cc1933; color: #fff; border-color: #cc1933; }
+
+    /* ─── MAIN LAYOUT ─── */
+    .main-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      position: sticky;
+      top: 80px;
+    }
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+    }
+    .sidebar-nav { list-style: none; }
+    .sidebar-nav li { border-bottom: 1px solid #f0f0f0; }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 12px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    .sidebar-nav a:hover {
+      background: #fff5f6;
+      border-left-color: #cc1933;
+      color: #cc1933;
+    }
+    .sidebar-nav a.active {
+      background: #fff5f6;
+      border-left-color: #cc1933;
+      color: #cc1933;
+      font-weight: 700;
+    }
+    .sidebar-nav .icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+    .sidebar-nav a.active .icon,
+    .sidebar-nav a:hover .icon { opacity: 1; }
+
+    /* ─── CONTENT AREA ─── */
+    .content { min-width: 0; }
+
+    .section-block {
+      margin-bottom: 48px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid #cc1933;
+    }
+    .section-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    .section-badge {
+      font-size: 11px;
+      background: #cc1933;
+      color: #fff;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* ─── TROUBLE CARDS ─── */
+    .trouble-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .trouble-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: all 0.2s;
+      background: #fff;
+    }
+    .trouble-card:hover {
+      border-color: #cc1933;
+      box-shadow: 0 4px 16px rgba(204,25,51,0.1);
+      transform: translateY(-2px);
+    }
+    .trouble-icon {
+      width: 44px;
+      height: 44px;
+      background: #fff0f2;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 20px;
+    }
+    .trouble-card-body h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #1a1a1a;
+    }
+    .trouble-card-body p {
+      font-size: 12px;
+      color: #777;
+    }
+    .trouble-card-arrow {
+      margin-left: auto;
+      color: #ccc;
+      font-size: 18px;
+      align-self: center;
+    }
+
+    /* ─── MODEL SELECT ─── */
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .model-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      padding: 18px 16px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+      transition: all 0.2s;
+      background: #fff;
+    }
+    .model-card:hover {
+      border-color: #cc1933;
+      box-shadow: 0 4px 16px rgba(204,25,51,0.1);
+      transform: translateY(-2px);
+    }
+    .model-img {
+      width: 72px;
+      height: 72px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    .model-card h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    .model-card p {
+      font-size: 11px;
+      color: #888;
+    }
+
+    /* ─── OPERATION LIST ─── */
+    .op-list { list-style: none; }
+    .op-list li {
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .op-list a {
+      display: flex;
+      align-items: center;
+      padding: 16px 12px;
+      text-decoration: none;
+      color: #1a1a1a;
+      font-size: 14px;
+      gap: 12px;
+      transition: all 0.15s;
+    }
+    .op-list a:hover {
+      background: #fff5f6;
+      color: #cc1933;
+      padding-left: 18px;
+    }
+    .op-list .tag {
+      font-size: 11px;
+      background: #f0f0f0;
+      color: #555;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .op-list .new-tag {
+      background: #cc1933;
+      color: #fff;
+    }
+
+    /* ─── MANUAL CARDS ─── */
+    .manual-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .manual-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+    .manual-card:hover {
+      border-color: #cc1933;
+      box-shadow: 0 4px 16px rgba(204,25,51,0.1);
+      transform: translateY(-2px);
+    }
+    .manual-card-head {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      background: #f8f8f8;
+      height: 100px;
+    }
+    .manual-card-body {
+      padding: 16px;
+    }
+    .manual-card-body h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .manual-card-body p {
+      font-size: 12px;
+      color: #888;
+    }
+
+    /* ─── AI SUPPORT ─── */
+    .ai-section {
+      background: linear-gradient(135deg, #1a2640 0%, #2a3d5e 100%);
+      border-radius: 10px;
+      padding: 36px 40px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .ai-icon-wrap {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ai-text { flex: 1; }
+    .ai-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #cc1933;
+      background: rgba(204,25,51,0.15);
+      border: 1px solid #cc1933;
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .ai-text h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .ai-text p {
+      font-size: 14px;
+      opacity: 0.75;
+      line-height: 1.7;
+    }
+    .ai-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .btn-ai-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #cc1933;
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-ai-primary:hover { background: #a8142a; }
+    .btn-ai-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      border: 2px solid rgba(255,255,255,0.4);
+      transition: all 0.2s;
+    }
+    .btn-ai-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #cc1933;
+      color: rgba(255,255,255,0.8);
+      padding: 48px 24px 24px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+    }
+    .footer-logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+    .footer-links {
+      display: flex;
+      gap: 48px;
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 8px; }
+    .footer-col a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 12px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    .footer-bottom p { color: rgba(255,255,255,0.6); }
+  </style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <img src="https://xacti-co.com/wp-content/uploads/2021/12/cropped-Xacti-logo-21_Dec.png" alt="Xacti">
+    </a>
+    <nav>
+      <a href="#">ソリューション</a>
+      <a href="#">導入事例</a>
+      <a href="#" class="active">サポート</a>
+      <a href="#">会社情報</a>
+      <a href="#" class="header-contact">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── BREADCRUMB ─── -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="#">ホーム</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="#">サポート</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>FAQ・よくあるご質問</span>
+  </div>
+</div>
+
+<!-- ─── PAGE HERO ─── -->
+<section class="page-hero">
+  <h1>サポートセンター</h1>
+  <p>製品に関するご不明点・トラブルを素早く解決します</p>
+  <div class="page-hero-tabs">
+    <a href="faq.html" class="page-hero-tab active">FAQ・よくあるご質問</a>
+    <a href="solution.html" class="page-hero-tab">ソリューション事例検索</a>
+  </div>
+</section>
+
+<!-- ─── SEARCH BAR ─── -->
+<div class="search-section">
+  <div class="search-inner">
+    <p class="search-label">キーワードでFAQを検索</p>
+    <div class="search-bar">
+      <input type="text" placeholder="例：電源が入らない、Wi-Fi接続、エラーコード E-101 …">
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        検索
+      </button>
+    </div>
+    <div class="search-tags">
+      <span>よく検索されるキーワード：</span>
+      <a class="search-tag" href="#">電源が入らない</a>
+      <a class="search-tag" href="#">Wi-Fi接続</a>
+      <a class="search-tag" href="#">映像が映らない</a>
+      <a class="search-tag" href="#">初期化方法</a>
+      <a class="search-tag" href="#">ファームウェア更新</a>
+      <a class="search-tag" href="#">エラー表示</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MAIN ─── -->
+<div class="main-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <p class="sidebar-title">カテゴリ</p>
+    <ul class="sidebar-nav">
+      <li>
+        <a href="#trouble" class="active">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          トラブル対応（症状別）
+        </a>
+      </li>
+      <li>
+        <a href="#model">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          型番別サポート
+        </a>
+      </li>
+      <li>
+        <a href="#operation">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          操作・設定
+        </a>
+      </li>
+      <li>
+        <a href="#manual">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          マニュアル
+        </a>
+      </li>
+      <li>
+        <a href="#ai">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          AIサポート
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ① トラブル対応 -->
+    <section class="section-block" id="trouble">
+      <div class="section-header">
+        <h2>トラブル対応（症状別）</h2>
+        <span class="section-badge">よく見られています</span>
+      </div>
+      <div class="trouble-grid">
+        <a class="trouble-card" href="#">
+          <div class="trouble-icon">🔋</div>
+          <div class="trouble-card-body">
+            <h3>電源が入らない</h3>
+            <p>バッテリー・電源ケーブルに関するトラブル</p>
+          </div>
+          <span class="trouble-card-arrow">›</span>
+        </a>
+        <a class="trouble-card" href="#">
+          <div class="trouble-icon">📺</div>
+          <div class="trouble-card-body">
+            <h3>映像が映らない</h3>
+            <p>画面表示・映像出力に関するトラブル</p>
+          </div>
+          <span class="trouble-card-arrow">›</span>
+        </a>
+        <a class="trouble-card" href="#">
+          <div class="trouble-icon">📡</div>
+          <div class="trouble-card-body">
+            <h3>接続できない</h3>
+            <p>Wi-Fi・有線LAN・Bluetooth接続のトラブル</p>
+          </div>
+          <span class="trouble-card-arrow">›</span>
+        </a>
+        <a class="trouble-card" href="#">
+          <div class="trouble-icon">⚠️</div>
+          <div class="trouble-card-body">
+            <h3>エラー表示</h3>
+            <p>エラーコード・警告メッセージの対処法</p>
+          </div>
+          <span class="trouble-card-arrow">›</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ② 型番別サポート -->
+    <section class="section-block" id="model">
+      <div class="section-header">
+        <h2>型番別サポート</h2>
+      </div>
+      <div class="model-grid">
+        <a class="model-card" href="#">
+          <div class="model-img">📷</div>
+          <h3>CX-WLシリーズ</h3>
+          <p>現場DXウェアラブルカメラ</p>
+        </a>
+        <a class="model-card" href="#">
+          <div class="model-img">🎥</div>
+          <h3>ドボレコシリーズ</h3>
+          <p>建設・土木向け安全DX</p>
+        </a>
+        <a class="model-card" href="#">
+          <div class="model-img">🔍</div>
+          <h3>フォクレコシリーズ</h3>
+          <p>製造・工場向け安全DX</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ③ 操作・設定 -->
+    <section class="section-block" id="operation">
+      <div class="section-header">
+        <h2>操作・設定</h2>
+      </div>
+      <ul class="op-list">
+        <li>
+          <a href="#">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cc1933" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            初期設定の手順
+            <span class="tag new-tag">動画あり</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cc1933" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            Wi-Fi・ネットワーク接続方法
+            <span class="tag">設定ガイド</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cc1933" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            基本操作ガイド
+            <span class="tag">PDF</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cc1933" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            ファームウェアのアップデート方法
+            <span class="tag new-tag">最新版</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cc1933" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            工場出荷時設定へのリセット方法
+            <span class="tag">手順書</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ④ マニュアル -->
+    <section class="section-block" id="manual">
+      <div class="section-header">
+        <h2>マニュアル</h2>
+      </div>
+      <div class="manual-grid">
+        <a class="manual-card" href="#">
+          <div class="manual-card-head">📄</div>
+          <div class="manual-card-body">
+            <h3>PDF マニュアル</h3>
+            <p>製品ごとの取扱説明書・仕様書をPDFでダウンロード</p>
+          </div>
+        </a>
+        <a class="manual-card" href="#">
+          <div class="manual-card-head">▶️</div>
+          <div class="manual-card-body">
+            <h3>動画マニュアル</h3>
+            <p>セットアップ・操作方法を動画でわかりやすく解説</p>
+          </div>
+        </a>
+        <a class="manual-card" href="#">
+          <div class="manual-card-head">📋</div>
+          <div class="manual-card-body">
+            <h3>手順書</h3>
+            <p>設定・メンテナンス手順のステップバイステップガイド</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ⑤ AIサポート -->
+    <section class="section-block" id="ai">
+      <div class="ai-section">
+        <div class="ai-icon-wrap">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="36" cy="36" r="36" fill="rgba(255,255,255,0.08)"/>
+            <!-- brain/circuit head -->
+            <rect x="20" y="22" width="32" height="26" rx="6" stroke="rgba(255,255,255,0.9)" stroke-width="2" fill="none"/>
+            <!-- eyes -->
+            <circle cx="28" cy="33" r="3" fill="#cc1933"/>
+            <circle cx="44" cy="33" r="3" fill="#cc1933"/>
+            <!-- mouth / smile -->
+            <path d="M28 42 Q36 48 44 42" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <!-- antenna -->
+            <line x1="36" y1="22" x2="36" y2="14" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="36" cy="12" r="3" fill="#cc1933"/>
+            <!-- ears / side connectors -->
+            <line x1="20" y1="35" x2="14" y2="35" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="35" r="2.5" fill="rgba(255,255,255,0.4)"/>
+            <line x1="52" y1="35" x2="58" y2="35" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="60" cy="35" r="2.5" fill="rgba(255,255,255,0.4)"/>
+          </svg>
+        </div>
+        <div class="ai-text">
+          <span class="ai-label">AI SUPPORT</span>
+          <h2>AIサポートで素早く解決</h2>
+          <p>症状や状況をチャットで入力するだけで、AIが最適な解決策を提案します。<br>まずは自由に入力するか、ヒアリング形式でお試しください。</p>
+        </div>
+        <div class="ai-actions">
+          <a class="btn-ai-primary" href="#">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            自由入力で質問する
+          </a>
+          <a class="btn-ai-secondary" href="#">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            トラブルヒアリングを開始
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+</div><!-- /main-wrap -->
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="https://xacti-co.com/wp-content/uploads/2021/12/cropped-Xacti-logo-21_Dec.png" alt="Xacti">
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>サポート</h4>
+          <ul>
+            <li><a href="#">FAQ・よくあるご質問</a></li>
+            <li><a href="#">ソリューション事例検索</a></li>
+            <li><a href="#">ダウンロードセンター</a></li>
+            <li><a href="#">リリース情報</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>製品・サービス</h4>
+          <ul>
+            <li><a href="#">現場DXソリューション</a></li>
+            <li><a href="#">安全DXソリューション</a></li>
+            <li><a href="#">XBPクラウド</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>会社情報</h4>
+          <ul>
+            <li><a href="#">会社概要</a></li>
+            <li><a href="#">お問い合わせ</a></li>
+            <li><a href="#">プライバシーポリシー</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Xacti Corporation. All Rights Reserved.</p>
+      <p>大阪本社 / 東京オフィス / インドネシア現地法人</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

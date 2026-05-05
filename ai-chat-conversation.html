@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIソリューション相談 | Xacti サポート</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      color: #1a1a1a;
+      background: #f4f5f7;
+      font-size: 15px;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: #cc1933;
+      flex-shrink: 0;
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo img { height: 36px; width: auto; filter: brightness(0) invert(1); }
+    nav { display: flex; align-items: center; gap: 32px; }
+    nav a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.85);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 4px 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    nav a:hover, nav a.active { color: #fff; border-bottom-color: #fff; }
+    .header-contact {
+      background: #fff !important;
+      color: #cc1933 !important;
+      padding: 8px 20px !important;
+      border-bottom: none !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      border-radius: 3px;
+    }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb { background: #f0f0f0; border-bottom: 1px solid #e8e8e8; flex-shrink: 0; }
+    .breadcrumb-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 9px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #666;
+    }
+    .breadcrumb a { color: #666; text-decoration: none; }
+    .breadcrumb a:hover { color: #cc1933; }
+    .breadcrumb-sep { color: #bbb; }
+
+    /* ─── SESSION BAR ─── */
+    .session-bar {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+      flex-shrink: 0;
+    }
+    .session-bar-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .session-bar-label {
+      font-size: 11px;
+      color: #aaa;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+    .session-tag {
+      font-size: 12px;
+      font-weight: 600;
+      background: #fff0f2;
+      border: 1px solid #cc1933;
+      color: #cc1933;
+      padding: 3px 12px;
+      border-radius: 20px;
+    }
+    .session-bar-sep { color: #ddd; font-size: 12px; }
+    .session-restart {
+      margin-left: auto;
+      font-size: 12px;
+      color: #aaa;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+    .session-restart:hover { color: #cc1933; }
+
+    /* ─── CHAT LAYOUT ─── */
+    .chat-layout {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 24px 0;
+    }
+
+    /* ─── MESSAGES ─── */
+    .messages {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      padding-bottom: 24px;
+    }
+
+    /* user message */
+    .msg-user {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      align-items: flex-end;
+    }
+    .msg-user-inner { max-width: 600px; }
+    .msg-user-tags {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .msg-user-tag {
+      font-size: 11px;
+      background: rgba(204,25,51,0.1);
+      border: 1px solid rgba(204,25,51,0.3);
+      color: #cc1933;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .msg-user-bubble {
+      background: #cc1933;
+      color: #fff;
+      border-radius: 12px 2px 12px 12px;
+      padding: 14px 18px;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+    .user-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+
+    /* ai message */
+    .msg-ai {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .ai-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a2640, #2a3d5e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .msg-ai-body { flex: 1; min-width: 0; }
+    .msg-ai-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .msg-ai-bubble {
+      background: #fff;
+      border-radius: 2px 12px 12px 12px;
+      padding: 18px 22px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #1a1a1a;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+      display: inline-block;
+      width: 100%;
+    }
+    .msg-ai-bubble p + p { margin-top: 10px; }
+    .msg-ai-bubble .emp { color: #cc1933; font-weight: 700; }
+    .msg-ai-bubble .summary-box {
+      background: #f8f8f8;
+      border-left: 3px solid #cc1933;
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin: 14px 0;
+      font-size: 13px;
+      color: #444;
+      line-height: 1.7;
+    }
+    .msg-ai-bubble .summary-box strong {
+      display: block;
+      font-size: 12px;
+      color: #cc1933;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    /* solution cards */
+    .solution-cards { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .sol-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s;
+      background: #fff;
+    }
+    .sol-card:hover { border-color: #cc1933; box-shadow: 0 3px 12px rgba(204,25,51,0.1); }
+    .sol-card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: #fff0f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .sol-card-body { flex: 1; min-width: 0; }
+    .sol-card-body strong { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; }
+    .sol-card-body span { font-size: 12px; color: #888; }
+    .sol-card-chips { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+    .sol-chip {
+      font-size: 10px;
+      background: #f0f0f0;
+      color: #555;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .sol-card-arrow { color: #ccc; flex-shrink: 0; }
+
+    /* follow-up prompt inside AI bubble */
+    .followup-prompt {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #eee;
+      font-size: 13px;
+      color: #666;
+    }
+
+    /* typing indicator */
+    .msg-typing .msg-ai-bubble { padding: 14px 20px; display: inline-flex; }
+    .typing-dots { display: flex; gap: 5px; align-items: center; height: 20px; }
+    .typing-dots span {
+      width: 7px; height: 7px;
+      background: #bbb; border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%,60%,100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
+    .msg-fade { animation: fadeIn 0.35s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── INPUT BAR ─── */
+    .input-bar {
+      position: sticky;
+      bottom: 0;
+      background: #fff;
+      border-top: 1px solid #e8e8e8;
+      padding: 14px 24px 18px;
+      flex-shrink: 0;
+    }
+    .input-bar-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .input-row textarea {
+      flex: 1;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: none;
+      height: 56px;
+      outline: none;
+      color: #1a1a1a;
+      transition: border-color 0.2s;
+      line-height: 1.5;
+    }
+    .input-row textarea:focus { border-color: #cc1933; }
+    .input-row textarea::placeholder { color: #bbb; }
+    .btn-send {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background: #cc1933;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .btn-send:hover { background: #a8142a; }
+    .btn-send:disabled { background: #e0e0e0; cursor: not-allowed; }
+    .input-hint {
+      font-size: 11px;
+      color: #bbb;
+      margin-top: 7px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <img src="https://xacti-co.com/wp-content/uploads/2021/12/cropped-Xacti-logo-21_Dec.png" alt="Xacti">
+    </a>
+    <nav>
+      <a href="#">ソリューション</a>
+      <a href="#">導入事例</a>
+      <a href="#" class="active">サポート</a>
+      <a href="#">会社情報</a>
+      <a href="#" class="header-contact">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="#">ホーム</a><span class="breadcrumb-sep">›</span>
+    <a href="#">サポート</a><span class="breadcrumb-sep">›</span>
+    <a href="solution.html">ソリューション事例検索</a><span class="breadcrumb-sep">›</span>
+    <a href="ai-chat.html">AIに相談する</a><span class="breadcrumb-sep">›</span>
+    <span>相談中</span>
+  </div>
+</div>
+
+<!-- SESSION BAR -->
+<div class="session-bar">
+  <div class="session-bar-inner">
+    <span class="session-bar-label">選択中の課題</span>
+    <span class="session-tag">👥 人手不足・省力化</span>
+    <span class="session-tag">🎓 技術伝承・OJT</span>
+    <a class="session-restart" href="ai-chat.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      最初からやり直す
+    </a>
+  </div>
+</div>
+
+<!-- CHAT LAYOUT -->
+<div class="chat-layout">
+  <div class="messages" id="messages">
+
+    <!-- ── ユーザーの最初のメッセージ ── -->
+    <div class="msg-user msg-fade">
+      <div class="msg-user-inner">
+        <div class="msg-user-tags">
+          <span class="msg-user-tag">👥 人手不足・省力化</span>
+          <span class="msg-user-tag">🎓 技術伝承・OJT</span>
+        </div>
+        <div class="msg-user-bubble">
+          ベテラン社員さんに負荷がかかっており、その技術の伝承をしようにも人が足りず、若者は現場に張り付いたままで教育もできていない状況です。
+        </div>
+      </div>
+      <div class="user-avatar">👤</div>
+    </div>
+
+    <!-- ── AIの最初の返答 ── -->
+    <div class="msg-ai msg-fade">
+      <div class="ai-avatar">
+        <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+          <rect x="5" y="8" width="22" height="16" rx="3" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none"/>
+          <circle cx="11" cy="15" r="2" fill="#cc1933"/>
+          <circle cx="21" cy="15" r="2" fill="#cc1933"/>
+          <path d="M11 20 Q16 23 21 20" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <line x1="16" y1="8" x2="16" y2="4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="16" cy="3" r="1.5" fill="#cc1933"/>
+        </svg>
+      </div>
+      <div class="msg-ai-body">
+        <div class="msg-ai-name">Xacti AI</div>
+        <div class="msg-ai-bubble">
+          <p>
+            <span class="emp">ベテラン社員への業務集中と、若手の育成が同時に進められない</span>という状況ですね。
+            これは現在の製造・設備・建設業界において非常に多くの企業が直面している、深刻かつ急務の課題です。
+          </p>
+
+          <div class="summary-box">
+            <strong>お客様の課題を整理しました</strong>
+            ・ベテラン社員への業務負荷が集中しており、疲弊・離職リスクがある<br>
+            ・ベテランが現場を離れられないため、若手への直接指導の時間がとれない<br>
+            ・若手が現場に張り付いていることで、体系的な教育機会がない
+          </div>
+
+          <p>
+            Xactiのウェアラブルカメラと遠隔支援ソリューションにより、<span class="emp">ベテランが現場を離れながらも若手をリアルタイムで指導できる</span>環境を構築した事例がございます。また、作業映像を蓄積してOJT動画ライブラリを構築することで、「ベテランなしでも学べる仕組み」を整えた企業もあります。
+          </p>
+
+          <div class="solution-cards">
+            <a class="sol-card" href="https://xacti-co.com/casestudies/plants_or_facilities/" target="_blank">
+              <div class="sol-card-icon">🏗️</div>
+              <div class="sol-card-body">
+                <strong>総合設備工事会社 ／ 技術伝承・遠隔OJT事例</strong>
+                <span>若手がウェアラブルカメラを装着し、事務所のベテランがリアルタイムで指導。移動コストゼロで技術伝承を実現。</span>
+                <div class="sol-card-chips">
+                  <span class="sol-chip">技術伝承</span>
+                  <span class="sol-chip">遠隔OJT</span>
+                  <span class="sol-chip">CX-WLシリーズ</span>
+                </div>
+              </div>
+              <svg class="sol-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+            <a class="sol-card" href="https://xacti-co.com/casestudies/plants_or_facilities/" target="_blank">
+              <div class="sol-card-icon">🏭</div>
+              <div class="sol-card-body">
+                <strong>プラント設備会社 ／ OJT映像ライブラリ構築事例</strong>
+                <span>点検・作業映像をXBPクラウドに蓄積。ベテランがいなくても動画で手順を確認できる仕組みを整備。</span>
+                <div class="sol-card-chips">
+                  <span class="sol-chip">ナレッジ蓄積</span>
+                  <span class="sol-chip">XBPクラウド</span>
+                  <span class="sol-chip">人手不足対応</span>
+                </div>
+              </div>
+              <svg class="sol-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+            <a class="sol-card" href="https://xacti-co.com/casestudies/plants_or_facilities/" target="_blank">
+              <div class="sol-card-icon">🔧</div>
+              <div class="sol-card-body">
+                <strong>ガスパイプライン事業者 ／ 省人化・遠隔確認事例</strong>
+                <span>複数人が必要だった現地出張を、1名＋遠隔支援に削減。ベテランの工数を大幅に圧縮した事例。</span>
+                <div class="sol-card-chips">
+                  <span class="sol-chip">省人化</span>
+                  <span class="sol-chip">遠隔支援</span>
+                  <span class="sol-chip">出張削減</span>
+                </div>
+              </div>
+              <svg class="sol-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+          </div>
+
+          <div class="followup-prompt">
+            他にも詳しい状況（業種・現場規模・現在の体制など）があれば教えてください。より絞り込んだご提案ができます。
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /messages -->
+</div><!-- /chat-layout -->
+
+<!-- INPUT BAR -->
+<div class="input-bar">
+  <div class="input-bar-inner">
+    <div class="input-row">
+      <textarea id="chatInput" placeholder="続けて質問や補足を入力してください…" onkeydown="handleKey(event)"></textarea>
+      <button class="btn-send" onclick="sendMessage()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <p class="input-hint">Enterで送信 ／ Shift+Enterで改行</p>
+  </div>
+</div>
+
+<script>
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    appendUser(text);
+    input.value = '';
+
+    showTyping().then(() => {
+      appendAI(`<p>ありがとうございます。<span class="emp">「${text.substring(0, 30)}${text.length > 30 ? '…' : ''}」</span>というご状況ですね。</p>
+        <p>いただいた内容をもとに、さらに詳しいご提案やお問い合わせのご案内ができます。下記よりお気軽にご連絡ください。</p>
+        <div class="solution-cards">
+          <a class="sol-card" href="https://xacti-co.com/casestudies/plants_or_facilities/" target="_blank">
+            <div class="sol-card-icon">📞</div>
+            <div class="sol-card-body">
+              <strong>個別相談・お問い合わせ</strong>
+              <span>担当者がお客様の状況に合わせた詳細なご提案をいたします。</span>
+            </div>
+            <svg class="sol-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>`);
+    });
+  }
+
+  function appendUser(text) {
+    const msgs = document.getElementById('messages');
+    const div = document.createElement('div');
+    div.className = 'msg-user msg-fade';
+    div.innerHTML = `
+      <div class="msg-user-inner">
+        <div class="msg-user-bubble">${text.replace(/\n/g,'<br>')}</div>
+      </div>
+      <div class="user-avatar">👤</div>`;
+    msgs.appendChild(div);
+    div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+
+  function appendAI(html) {
+    const msgs = document.getElementById('messages');
+    const div = document.createElement('div');
+    div.className = 'msg-ai msg-fade';
+    div.innerHTML = `
+      <div class="ai-avatar">
+        <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+          <rect x="5" y="8" width="22" height="16" rx="3" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none"/>
+          <circle cx="11" cy="15" r="2" fill="#cc1933"/>
+          <circle cx="21" cy="15" r="2" fill="#cc1933"/>
+          <path d="M11 20 Q16 23 21 20" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <line x1="16" y1="8" x2="16" y2="4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="16" cy="3" r="1.5" fill="#cc1933"/>
+        </svg>
+      </div>
+      <div class="msg-ai-body">
+        <div class="msg-ai-name">Xacti AI</div>
+        <div class="msg-ai-bubble">${html}</div>
+      </div>`;
+    msgs.appendChild(div);
+    div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+
+  function showTyping() {
+    return new Promise(resolve => {
+      const msgs = document.getElementById('messages');
+      const div = document.createElement('div');
+      div.className = 'msg-ai msg-typing msg-fade';
+      div.id = 'typing';
+      div.innerHTML = `
+        <div class="ai-avatar">
+          <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+            <rect x="5" y="8" width="22" height="16" rx="3" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none"/>
+            <circle cx="11" cy="15" r="2" fill="#cc1933"/>
+            <circle cx="21" cy="15" r="2" fill="#cc1933"/>
+            <path d="M11 20 Q16 23 21 20" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <line x1="16" y1="8" x2="16" y2="4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="16" cy="3" r="1.5" fill="#cc1933"/>
+          </svg>
+        </div>
+        <div class="msg-ai-body">
+          <div class="msg-ai-name">Xacti AI</div>
+          <div class="msg-ai-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+        </div>`;
+      msgs.appendChild(div);
+      div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      setTimeout(() => { div.remove(); resolve(); }, 1400);
+    });
+  }
+</script>
+</body>
+</html>
