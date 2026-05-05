@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIトラブルサポート | Xacti FAQ</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      color: #1a1a1a; background: #f4f5f7; font-size: 15px; line-height: 1.6;
+      display: flex; flex-direction: column; min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    header { background: #cc1933; flex-shrink: 0; }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo img { height: 36px; width: auto; filter: brightness(0) invert(1); }
+    nav { display: flex; align-items: center; gap: 32px; }
+    nav a {
+      text-decoration: none; color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500;
+      padding: 4px 0; border-bottom: 2px solid transparent; transition: all 0.2s;
+    }
+    nav a:hover, nav a.active { color: #fff; border-bottom-color: #fff; }
+    .header-contact {
+      background: #fff !important; color: #cc1933 !important; padding: 8px 20px !important;
+      border-bottom: none !important; font-size: 13px !important; font-weight: 700 !important; border-radius: 3px;
+    }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb { background: #f0f0f0; border-bottom: 1px solid #e8e8e8; flex-shrink: 0; }
+    .breadcrumb-inner {
+      max-width: 1200px; margin: 0 auto; padding: 9px 24px;
+      display: flex; align-items: center; gap: 8px; font-size: 12px; color: #666;
+    }
+    .breadcrumb a { color: #666; text-decoration: none; }
+    .breadcrumb a:hover { color: #cc1933; }
+    .breadcrumb-sep { color: #bbb; }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-bar { background: #fff; border-bottom: 1px solid #eee; flex-shrink: 0; padding: 14px 0; }
+    .progress-inner {
+      max-width: 760px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center;
+    }
+    .prog-step { display: flex; align-items: center; flex: 1; }
+    .prog-step:last-child { flex: 0; }
+    .prog-dot {
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; flex-shrink: 0;
+      border: 2px solid #ddd; background: #fff; color: #bbb; transition: all 0.4s;
+    }
+    .prog-dot.done  { background: #cc1933; border-color: #cc1933; color: #fff; }
+    .prog-dot.active { background: #fff; border-color: #cc1933; color: #cc1933; }
+    .prog-label {
+      font-size: 10px; color: #bbb; margin-left: 6px; white-space: nowrap; transition: color 0.3s;
+    }
+    .prog-label.done   { color: #999; }
+    .prog-label.active { color: #cc1933; font-weight: 700; }
+    .prog-line { flex: 1; height: 2px; background: #eee; margin: 0 6px; transition: background 0.4s; }
+    .prog-line.done { background: #cc1933; }
+
+    /* ─── CHAT LAYOUT ─── */
+    .chat-layout {
+      flex: 1; display: flex; flex-direction: column;
+      max-width: 760px; width: 100%; margin: 0 auto; padding: 28px 24px 0;
+    }
+    .messages { flex: 1; display: flex; flex-direction: column; gap: 22px; padding-bottom: 24px; }
+
+    /* ─── USER BUBBLE ─── */
+    .msg-user { display: flex; justify-content: flex-end; gap: 10px; align-items: flex-end; }
+    .msg-user-bubble {
+      background: #cc1933; color: #fff;
+      border-radius: 12px 2px 12px 12px;
+      padding: 12px 18px; font-size: 14px; line-height: 1.7; max-width: 480px;
+    }
+    .user-avatar {
+      width: 34px; height: 34px; border-radius: 50%; background: #ddd;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0; align-self: flex-end;
+    }
+
+    /* ─── AI BUBBLE ─── */
+    .msg-ai { display: flex; gap: 12px; align-items: flex-start; }
+    .ai-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, #1a2640, #2a3d5e);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .msg-ai-body { flex: 1; min-width: 0; }
+    .msg-ai-name { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.05em; margin-bottom: 5px; }
+    .msg-ai-bubble {
+      background: #fff; border-radius: 2px 12px 12px 12px;
+      padding: 16px 20px; font-size: 14px; line-height: 1.8;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07); display: inline-block; width: 100%;
+    }
+    .msg-ai-bubble p + p { margin-top: 8px; }
+    .emp { color: #cc1933; font-weight: 700; }
+
+    /* ─── QUICK REPLIES ─── */
+    .quick-replies {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 14px; padding-top: 12px; border-top: 1px solid #f0f0f0;
+    }
+    .qr-btn {
+      background: #fff; border: 1.5px solid #ddd; border-radius: 20px;
+      padding: 8px 16px; font-size: 13px; font-weight: 500; color: #333;
+      cursor: pointer; transition: all 0.18s; font-family: inherit;
+    }
+    .qr-btn:hover { border-color: #cc1933; color: #cc1933; background: #fff8f9; }
+    .qr-btn.selected { border-color: #cc1933; background: #fff0f2; color: #cc1933; font-weight: 700; pointer-events: none; }
+    .qr-btn:disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+
+    /* ─── RESULT ─── */
+    .result-summary {
+      background: #f8f8f8; border-left: 3px solid #cc1933;
+      border-radius: 0 8px 8px 0; padding: 14px 18px;
+      font-size: 13px; line-height: 1.8; color: #444; margin: 14px 0;
+    }
+    .result-summary strong {
+      display: block; font-size: 11px; color: #cc1933;
+      font-weight: 700; letter-spacing: 0.08em; margin-bottom: 8px;
+    }
+    .manual-cards { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+    .manual-card {
+      border: 1px solid #e5e5e5; border-radius: 8px; padding: 13px 16px;
+      text-decoration: none; color: inherit; display: flex;
+      align-items: center; gap: 12px; transition: all 0.2s; background: #fff;
+    }
+    .manual-card:hover { border-color: #cc1933; box-shadow: 0 3px 10px rgba(204,25,51,0.1); }
+    .manual-icon {
+      width: 40px; height: 40px; border-radius: 7px; background: #fff0f2;
+      display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
+    }
+    .manual-body { flex: 1; }
+    .manual-body strong { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; }
+    .manual-body span { font-size: 12px; color: #888; }
+    .manual-arrow { color: #ccc; }
+    .contact-banner {
+      margin-top: 14px; background: #1a2640; border-radius: 8px;
+      padding: 16px 20px; display: flex; align-items: center;
+      justify-content: space-between; gap: 16px;
+    }
+    .contact-banner p { color: rgba(255,255,255,0.85); font-size: 13px; line-height: 1.6; }
+    .contact-banner p strong { color: #fff; display: block; font-size: 14px; margin-bottom: 2px; }
+    .btn-contact {
+      background: #cc1933; color: #fff; border: none; padding: 10px 22px;
+      border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer;
+      white-space: nowrap; flex-shrink: 0; text-decoration: none; transition: background 0.2s;
+    }
+    .btn-contact:hover { background: #a8142a; }
+
+    /* ─── TYPING ─── */
+    .typing-dots { display: flex; gap: 5px; align-items: center; height: 18px; }
+    .typing-dots span {
+      width: 7px; height: 7px; background: #bbb; border-radius: 50%;
+      animation: tdot 1.2s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes tdot { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
+
+    .msg-fade { animation: fadeUp 0.35s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ─── INPUT BAR ─── */
+    .input-bar {
+      position: sticky; bottom: 0; background: #fff;
+      border-top: 1px solid #e8e8e8; padding: 12px 24px 16px; flex-shrink: 0;
+    }
+    .input-bar-inner { max-width: 760px; margin: 0 auto; }
+    .input-row { display: flex; gap: 10px; align-items: flex-end; }
+    .input-row textarea {
+      flex: 1; border: 1.5px solid #ddd; border-radius: 8px; padding: 11px 15px;
+      font-size: 14px; font-family: inherit; resize: none; height: 50px; outline: none;
+      color: #1a1a1a; transition: border-color 0.2s; line-height: 1.5;
+    }
+    .input-row textarea:focus { border-color: #cc1933; }
+    .input-row textarea::placeholder { color: #bbb; }
+    .input-row textarea:disabled { background: #f5f5f5; color: #bbb; cursor: not-allowed; }
+    .btn-send {
+      width: 44px; height: 44px; border-radius: 8px; background: #cc1933;
+      border: none; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0; transition: background 0.2s;
+    }
+    .btn-send:hover { background: #a8142a; }
+    .btn-send:disabled { background: #ddd; cursor: not-allowed; }
+    .input-hint { font-size: 11px; color: #bbb; margin-top: 6px; text-align: center; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#"><img src="https://xacti-co.com/wp-content/uploads/2021/12/cropped-Xacti-logo-21_Dec.png" alt="Xacti"></a>
+    <nav>
+      <a href="#">ソリューション</a><a href="#">導入事例</a>
+      <a href="#" class="active">サポート</a><a href="#">会社情報</a>
+      <a href="#" class="header-contact">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="#">ホーム</a><span class="breadcrumb-sep">›</span>
+    <a href="faq.html">FAQ</a><span class="breadcrumb-sep">›</span>
+    <span>AIトラブルサポート</span>
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar">
+  <div class="progress-inner" id="progressInner">
+    <div class="prog-step">
+      <div class="prog-dot active" id="dot1">1</div>
+      <span class="prog-label active" id="lbl1">症状の選択</span>
+      <div class="prog-line" id="ln1"></div>
+    </div>
+    <div class="prog-step">
+      <div class="prog-dot" id="dot2">2</div>
+      <span class="prog-label" id="lbl2">デバイス確認</span>
+      <div class="prog-line" id="ln2"></div>
+    </div>
+    <div class="prog-step">
+      <div class="prog-dot" id="dot3">3</div>
+      <span class="prog-label" id="lbl3">発生時期</span>
+      <div class="prog-line" id="ln3"></div>
+    </div>
+    <div class="prog-step">
+      <div class="prog-dot" id="dot4">4</div>
+      <span class="prog-label" id="lbl4">詳細状況</span>
+      <div class="prog-line" id="ln4"></div>
+    </div>
+    <div class="prog-step">
+      <div class="prog-dot" id="dot5">5</div>
+      <span class="prog-label" id="lbl5">回答</span>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<div class="chat-layout">
+  <div class="messages" id="messages"></div>
+</div>
+
+<!-- INPUT BAR -->
+<div class="input-bar">
+  <div class="input-bar-inner">
+    <div class="input-row">
+      <textarea id="chatInput" placeholder="上の選択肢から選ぶか、こちらに直接入力してください" onkeydown="handleKey(event)"></textarea>
+      <button class="btn-send" id="sendBtn" onclick="sendFree()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <p class="input-hint">Enterで送信 ／ Shift+Enterで改行</p>
+  </div>
+</div>
+
+<script>
+  /* ── state ── */
+  let step = 1;
+  const ans = {};
+
+  const AVT = `<svg width="18" height="18" viewBox="0 0 32 32" fill="none">
+    <rect x="5" y="8" width="22" height="16" rx="3" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none"/>
+    <circle cx="11" cy="15" r="2" fill="#cc1933"/><circle cx="21" cy="15" r="2" fill="#cc1933"/>
+    <path d="M11 20 Q16 23 21 20" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <line x1="16" y1="8" x2="16" y2="4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="16" cy="3" r="1.5" fill="#cc1933"/>
+  </svg>`;
+
+  /* ── progress ── */
+  function setProgress(active) {
+    for (let i = 1; i <= 5; i++) {
+      const dot = document.getElementById('dot' + i);
+      const lbl = document.getElementById('lbl' + i);
+      const ln  = i < 5 ? document.getElementById('ln' + i) : null;
+      if (i < active) {
+        dot.className = 'prog-dot done'; dot.innerHTML = '✓';
+        lbl.className = 'prog-label done';
+        if (ln) ln.className = 'prog-line done';
+      } else if (i === active) {
+        dot.className = 'prog-dot active'; dot.textContent = i;
+        lbl.className = 'prog-label active';
+        if (ln) ln.className = 'prog-line';
+      } else {
+        dot.className = 'prog-dot'; dot.textContent = i;
+        lbl.className = 'prog-label';
+        if (ln) ln.className = 'prog-line';
+      }
+    }
+  }
+
+  /* ── render helpers ── */
+  function appendUser(text) {
+    const m = document.getElementById('messages');
+    const d = document.createElement('div');
+    d.className = 'msg-user msg-fade';
+    d.innerHTML = `<div class="msg-user-bubble">${text}</div><div class="user-avatar">👤</div>`;
+    m.appendChild(d);
+    d.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+
+  function appendAI(html) {
+    const m = document.getElementById('messages');
+    const d = document.createElement('div');
+    d.className = 'msg-ai msg-fade';
+    d.innerHTML = `<div class="ai-avatar">${AVT}</div>
+      <div class="msg-ai-body">
+        <div class="msg-ai-name">Xacti サポート AI</div>
+        <div class="msg-ai-bubble">${html}</div>
+      </div>`;
+    m.appendChild(d);
+    d.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+
+  function typing() {
+    return new Promise(res => {
+      const m = document.getElementById('messages');
+      const d = document.createElement('div');
+      d.className = 'msg-ai msg-fade'; d.id = 'typing';
+      d.innerHTML = `<div class="ai-avatar">${AVT}</div>
+        <div class="msg-ai-body">
+          <div class="msg-ai-name">Xacti サポート AI</div>
+          <div class="msg-ai-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+        </div>`;
+      m.appendChild(d);
+      d.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      setTimeout(() => { d.remove(); res(); }, 900);
+    });
+  }
+
+  function disableQR(id) {
+    const el = document.getElementById(id);
+    if (el) el.querySelectorAll('.qr-btn').forEach(b => { b.disabled = true; });
+  }
+
+  function lockInput(placeholder) {
+    document.getElementById('chatInput').disabled = true;
+    document.getElementById('chatInput').placeholder = placeholder || '';
+    document.getElementById('sendBtn').disabled = true;
+  }
+
+  function unlockInput(placeholder) {
+    const el = document.getElementById('chatInput');
+    el.disabled = false;
+    el.placeholder = placeholder || '上の選択肢から選ぶか、こちらに直接入力してください';
+    document.getElementById('sendBtn').disabled = false;
+  }
+
+  /* ── STEP 1: 症状選択（ページロードで表示） ── */
+  window.addEventListener('DOMContentLoaded', () => {
+    setProgress(1);
+    appendAI(`
+      <p>こんにちは！Xacti AIサポートです。まず、<span class="emp">どのような症状</span>でお困りですか？</p>
+      <div class="quick-replies" id="qr1">
+        <button class="qr-btn" onclick="pickSymptom(this,'power','🔋 電源が入らない')">🔋 電源が入らない</button>
+        <button class="qr-btn" onclick="pickSymptom(this,'video','📺 映像が映らない')">📺 映像が映らない</button>
+        <button class="qr-btn" onclick="pickSymptom(this,'connect','📡 接続できない')">📡 接続できない</button>
+        <button class="qr-btn" onclick="pickSymptom(this,'error','⚠️ エラー表示が出ている')">⚠️ エラー表示が出ている</button>
+      </div>`);
+    unlockInput('症状を選ぶか、こちらに直接ご入力ください');
+  });
+
+  function pickSymptom(el, key, label) {
+    el.classList.add('selected'); disableQR('qr1');
+    ans.symptom = { key, label };
+    appendUser(label);
+    step = 2; setProgress(2);
+    lockInput();
+    typing().then(askDevice);
+  }
+
+  /* ── STEP 2: デバイス確認 ── */
+  function askDevice() {
+    appendAI(`
+      <p>承知しました。<span class="emp">${ans.symptom.label}</span>ですね。</p>
+      <p>次に、<span class="emp">お使いの製品</span>を教えてください。</p>
+      <div class="quick-replies" id="qr2">
+        <button class="qr-btn" onclick="pickDevice(this,'cx_wl','CX-WLシリーズ（現場DXカメラ）')">📷 CX-WLシリーズ</button>
+        <button class="qr-btn" onclick="pickDevice(this,'doboureco','ドボレコシリーズ（建設・土木向け）')">🏗️ ドボレコシリーズ</button>
+        <button class="qr-btn" onclick="pickDevice(this,'fokureco','フォクレコシリーズ（製造・工場向け）')">🏭 フォクレコシリーズ</button>
+        <button class="qr-btn" onclick="pickDevice(this,'unknown','わからない・その他')">❓ わからない・その他</button>
+      </div>`);
+    unlockInput('型番やシリーズ名を直接入力することもできます');
+  }
+
+  function pickDevice(el, key, label) {
+    el.classList.add('selected'); disableQR('qr2');
+    ans.device = { key, label };
+    appendUser(label);
+    step = 3; setProgress(3);
+    lockInput();
+    typing().then(askTiming);
+  }
+
+  /* ── STEP 3: 発生時期 ── */
+  function askTiming() {
+    appendAI(`
+      <p>ありがとうございます。<span class="emp">いつ頃から</span>この症状が起きていますか？</p>
+      <div class="quick-replies" id="qr3">
+        <button class="qr-btn" onclick="pickTiming(this,'today','今日・さっきから')">📅 今日・さっきから</button>
+        <button class="qr-btn" onclick="pickTiming(this,'few_days','2〜3日前から')">📅 2〜3日前から</button>
+        <button class="qr-btn" onclick="pickTiming(this,'week','1週間以上前から')">📅 1週間以上前から</button>
+        <button class="qr-btn" onclick="pickTiming(this,'from_start','購入直後・最初から')">📦 購入直後・最初から</button>
+      </div>`);
+    unlockInput('「昨日から」「先週から」など自由に入力できます');
+  }
+
+  function pickTiming(el, key, label) {
+    el.classList.add('selected'); disableQR('qr3');
+    ans.timing = { key, label };
+    appendUser(label);
+    step = 4; setProgress(4);
+    lockInput();
+    typing().then(askDetail);
+  }
+
+  /* ── STEP 4: 詳細状況 ── */
+  function askDetail() {
+    const ispower = ans.symptom.key === 'power';
+    const isvideo = ans.symptom.key === 'video';
+    const isconn  = ans.symptom.key === 'connect';
+
+    let q = ''; let opts = '';
+    if (ispower) {
+      q = '電源ボタンを押したとき、<span class="emp">どのような状態</span>になりますか？';
+      opts = `
+        <button class="qr-btn" onclick="pickDetail(this,'no_led','LEDが全く反応しない')">🔴 LEDが全く反応しない</button>
+        <button class="qr-btn" onclick="pickDetail(this,'blink','LEDが点滅して止まる')">🟡 LEDが点滅して止まる</button>
+        <button class="qr-btn" onclick="pickDetail(this,'halfway','起動途中で止まる・再起動を繰り返す')">🔄 起動途中で止まる</button>
+        <button class="qr-btn" onclick="pickDetail(this,'cable_only','充電中のみ動く')">🔌 充電中のみ動く</button>`;
+    } else if (isvideo) {
+      q = '映像の状態について、もう少し教えてください。';
+      opts = `
+        <button class="qr-btn" onclick="pickDetail(this,'no_image','画面が真っ暗・何も映らない')">⬛ 画面が真っ暗</button>
+        <button class="qr-btn" onclick="pickDetail(this,'noise','ノイズ・乱れがある')">📺 ノイズ・乱れがある</button>
+        <button class="qr-btn" onclick="pickDetail(this,'freeze','映像がフリーズする')">⏸️ 映像がフリーズする</button>
+        <button class="qr-btn" onclick="pickDetail(this,'partial','一部だけ映らない')">🔲 一部だけ映らない</button>`;
+    } else if (isconn) {
+      q = '接続の状況について教えてください。';
+      opts = `
+        <button class="qr-btn" onclick="pickDetail(this,'wifi_fail','Wi-Fiに繋がらない')">📶 Wi-Fiに繋がらない</button>
+        <button class="qr-btn" onclick="pickDetail(this,'app_fail','アプリが認識しない')">📱 アプリが認識しない</button>
+        <button class="qr-btn" onclick="pickDetail(this,'disconnect','繋がるが途中で切れる')">🔌 途中で切れる</button>
+        <button class="qr-btn" onclick="pickDetail(this,'pc_fail','PCから認識されない')">💻 PCから認識されない</button>`;
+    } else {
+      q = '表示されているエラーの内容を教えてください。';
+      opts = `
+        <button class="qr-btn" onclick="pickDetail(this,'code','エラーコードが表示されている')">🔢 エラーコードが表示</button>
+        <button class="qr-btn" onclick="pickDetail(this,'warning','警告ランプが点灯している')">⚠️ 警告ランプが点灯</button>
+        <button class="qr-btn" onclick="pickDetail(this,'freeze_err','画面がフリーズしている')">🛑 画面がフリーズ</button>
+        <button class="qr-btn" onclick="pickDetail(this,'sound','警告音が鳴っている')">🔔 警告音が鳴っている</button>`;
+    }
+
+    appendAI(`<p>${q}</p><div class="quick-replies" id="qr4">${opts}<button class="qr-btn" onclick="pickDetail(this,'other','その他・うまく説明できない')">❓ その他</button></div>`);
+    unlockInput('状況を詳しく教えてください');
+  }
+
+  function pickDetail(el, key, label) {
+    el.classList.add('selected'); disableQR('qr4');
+    ans.detail = { key, label };
+    appendUser(label);
+    step = 5; setProgress(5);
+    lockInput();
+    typing().then(showAnswer);
+  }
+
+  /* ── STEP 5: 回答 ── */
+  function showAnswer() {
+    const sk = ans.symptom.key;
+    const dk = ans.detail.key;
+
+    const diagnoses = {
+      power: {
+        no_led:    { text: '・バッテリーの完全放電が最も可能性の高い原因です。充電ケーブルを接続し、30分以上充電してから再度お試しください。<br>・充電器・ケーブル自体が正常か別の機器で確認してください。<br>・それでも変化がない場合はバッテリーの劣化・故障の可能性があります。', manuals: ['charge', 'battery', 'inquiry'] },
+        blink:     { text: '・LEDの点滅パターンによりエラー種別が特定できます。<br>・赤点滅：バッテリー残量不足 → 充電後に再試行<br>・橙点滅：ファームウェアエラー → 初期化をお試しください<br>・点滅回数をエラーコード表と照合することをおすすめします。', manuals: ['errorcode', 'firmware', 'reset'] },
+        halfway:   { text: '・ファームウェアの破損または設定ファイルの問題が考えられます。<br>・まず工場出荷時設定へのハードリセットをお試しください。<br>・リセット後も改善しない場合はファームウェアの再インストールが必要です。', manuals: ['reset', 'firmware', 'inquiry'] },
+        cable_only:{ text: '・バッテリーの劣化または接触不良が考えられます。<br>・バッテリーパックを一度取り外し、端子部分の汚れをやわらかい布で拭いてから再装着してください。<br>・バッテリー交換で解決するケースが多いです。', manuals: ['battery', 'terminal', 'inquiry'] },
+      },
+      video: {
+        no_image:  { text: '・接続ケーブルや出力設定をご確認ください。<br>・カメラの映像出力設定がオフになっている可能性があります。<br>・レンズカバーが装着されたままでないかご確認ください。', manuals: ['output', 'settings', 'inquiry'] },
+        noise:     { text: '・電波干渉や接続が不安定な状態が考えられます。<br>・Wi-Fi環境の改善や有線接続への切り替えをお試しください。<br>・ファームウェアを最新版にアップデートすることで改善するケースもあります。', manuals: ['wifi', 'firmware', 'inquiry'] },
+        freeze:    { text: '・録画データの容量不足またはSDカードの問題が考えられます。<br>・SDカードのフォーマットまたは交換をお試しください。<br>・本体の再起動で改善することもあります。', manuals: ['sdcard', 'reboot', 'inquiry'] },
+        partial:   { text: '・カメラレンズや接続端子の汚れ・破損が考えられます。<br>・レンズをやわらかいクロスで拭いてからご確認ください。<br>・それでも改善しない場合は修理対応が必要な可能性があります。', manuals: ['lens', 'repair', 'inquiry'] },
+      },
+      connect: {
+        wifi_fail: { text: '・SSIDとパスワードを再確認してください。<br>・2.4GHz / 5GHz の帯域設定が合っているかご確認ください。<br>・ルーターの再起動、または本体を工場出荷設定にリセットしてから再設定をお試しください。', manuals: ['wifi', 'reset', 'inquiry'] },
+        app_fail:  { text: '・アプリのバージョンが最新かご確認ください。<br>・スマートフォンのBluetooth・Wi-Fiをオフ→オンに切り替えてから再度ペアリングをお試しください。<br>・アプリの再インストールで解決するケースもあります。', manuals: ['app', 'pairing', 'inquiry'] },
+        disconnect:{ text: '・電波の届く範囲外に出ていないかご確認ください。<br>・電波干渉が多い環境（工場内・地下）では安定しにくい場合があります。<br>・中継器の設置や有線LAN接続への切り替えをご検討ください。', manuals: ['wifi', 'range', 'inquiry'] },
+        pc_fail:   { text: '・USBドライバーが正しくインストールされているかご確認ください。<br>・別のUSBポートやケーブルでお試しください。<br>・PCを再起動してから再接続することで認識される場合があります。', manuals: ['driver', 'usb', 'inquiry'] },
+      },
+      error: {
+        code:      { text: '・エラーコード表をもとに原因を特定できます。<br>・表示されているコードをマニュアルのエラーコード一覧と照合してください。<br>・E-001〜E-099はシステムエラー、E-100以降はハードウェアエラーを示すことが多いです。', manuals: ['errorcode', 'firmware', 'inquiry'] },
+        warning:   { text: '・警告ランプの色と点滅パターンを確認してください。<br>・赤点灯：電源・バッテリー系のエラー<br>・橙点滅：ファームウェア・設定系のエラー<br>・詳細はLEDエラーコード表をご参照ください。', manuals: ['errorcode', 'reset', 'inquiry'] },
+        freeze_err:{ text: '・本体のハードリセット（電源長押し10秒）をお試しください。<br>・それでも改善しない場合はファームウェアの再インストールをお試しください。<br>・定期的なフリーズが続く場合はメモリ不足またはハードウェア故障の可能性があります。', manuals: ['reset', 'firmware', 'inquiry'] },
+        sound:     { text: '・警告音の種類（回数・パターン）を確認してください。<br>・連続音：バッテリー切れ間近<br>・断続音：過熱警告（使用を一時中断し冷やしてください）<br>・詳細はマニュアルの警告音一覧をご参照ください。', manuals: ['errorcode', 'battery', 'inquiry'] },
+      }
+    };
+
+    const manualDB = {
+      charge:    { icon:'🔌', title:'充電・バッテリーのよくある質問', desc:'充電トラブルの対処法まとめ', href:'#' },
+      battery:   { icon:'🔋', title:'バッテリー交換・診断ガイド', desc:'バッテリー寿命の確認と交換手順（PDF）', href:'#' },
+      errorcode: { icon:'📄', title:'エラーコード・LEDランプ一覧', desc:'点滅パターン別の対処法（PDF）', href:'#' },
+      firmware:  { icon:'▶️', title:'ファームウェア更新手順（動画）', desc:'最新ファームウェアのダウンロードから適用まで', href:'#' },
+      reset:     { icon:'📋', title:'工場出荷時リセット手順書', desc:'ハードリセットの方法（データ消去注意）', href:'#' },
+      terminal:  { icon:'🔧', title:'端子クリーニング・接触不良の対処', desc:'精密機器の端子メンテナンス方法', href:'#' },
+      output:    { icon:'📺', title:'映像出力設定ガイド', desc:'出力設定の確認と変更手順', href:'#' },
+      settings:  { icon:'⚙️', title:'初期設定・各種設定マニュアル', desc:'カメラ設定の一覧と変更方法（PDF）', href:'#' },
+      wifi:      { icon:'📶', title:'Wi-Fi接続・ネットワーク設定ガイド', desc:'接続手順と帯域設定の確認方法', href:'#' },
+      sdcard:    { icon:'💾', title:'SDカード・ストレージ管理ガイド', desc:'フォーマット手順と推奨SDカード一覧', href:'#' },
+      reboot:    { icon:'🔄', title:'本体再起動・強制終了の手順', desc:'フリーズ時の対処法', href:'#' },
+      lens:      { icon:'🔍', title:'レンズ・カメラ部品のメンテナンス', desc:'クリーニング方法と定期メンテナンス', href:'#' },
+      repair:    { icon:'🛠️', title:'修理・部品交換のお申込み', desc:'保証期間・修理受付窓口のご案内', href:'#' },
+      app:       { icon:'📱', title:'アプリ設定・ペアリングガイド', desc:'スマートフォンアプリの設定手順', href:'#' },
+      pairing:   { icon:'🔗', title:'Bluetooth・Wi-Fiペアリング手順', desc:'初回接続から再ペアリングまでの手順', href:'#' },
+      range:     { icon:'📡', title:'通信範囲・電波干渉対策ガイド', desc:'安定した通信のための設置・設定のヒント', href:'#' },
+      driver:    { icon:'💻', title:'PCドライバー・ソフトウェアのダウンロード', desc:'対応OS別ドライバーインストール手順', href:'#' },
+      usb:       { icon:'🔌', title:'USB接続トラブルシューティング', desc:'PC認識不良の対処法', href:'#' },
+      inquiry:   { icon:'📞', title:'サポートへのお問い合わせ', desc:'上記で解決しない場合は担当者が対応します', href:'#' },
+    };
+
+    const fallback = { text: '詳しい状況をサポートチームにお伝えいただくと、より正確な診断が可能です。下記よりお問い合わせください。', manuals: ['inquiry'] };
+    const result = (diagnoses[sk] && diagnoses[sk][dk]) ? diagnoses[sk][dk] : fallback;
+
+    const mHTML = result.manuals.map(id => {
+      const m = manualDB[id] || manualDB.inquiry;
+      return `<a class="manual-card" href="${m.href}">
+        <div class="manual-icon">${m.icon}</div>
+        <div class="manual-body"><strong>${m.title}</strong><span>${m.desc}</span></div>
+        <svg class="manual-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>`;
+    }).join('');
+
+    appendAI(`
+      <p>ご回答ありがとうございました。状況を整理し、対処法をご案内します。</p>
+      <div class="result-summary">
+        <strong>📋 診断サマリー</strong>
+        症状：${ans.symptom.label}　／　製品：${ans.device.label}　／　発生時期：${ans.timing.label}　／　詳細：${ans.detail.label}
+        <br><br>${result.text}
+      </div>
+      <div class="manual-cards">${mHTML}</div>
+      <div class="contact-banner">
+        <p><strong>解決しない場合はお気軽にご相談ください</strong>担当スタッフが詳しくサポートいたします。</p>
+        <a class="btn-contact" href="#">お問い合わせ</a>
+      </div>`);
+
+    lockInput('サポートが完了しました');
+  }
+
+  /* ── FREE TEXT ── */
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendFree(); }
+  }
+
+  function sendFree() {
+    const el = document.getElementById('chatInput');
+    const text = el.value.trim();
+    if (!text) return;
+    el.value = '';
+
+    if (step === 1) { pickSymptom({ classList: { add: () => {} } }, 'free', text); return; }
+    if (step === 2) { pickDevice({ classList: { add: () => {} } }, 'free', text); disableQR('qr2'); return; }
+    if (step === 3) { pickTiming({ classList: { add: () => {} } }, 'free', text); disableQR('qr3'); return; }
+    if (step === 4) { pickDetail({ classList: { add: () => {} } }, 'free', text); disableQR('qr4'); return; }
+  }
+</script>
+</body>
+</html>
