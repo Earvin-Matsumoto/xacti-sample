@@ -136,6 +136,18 @@
       background: #fff0f2; border-left: 3px solid #cc1933;
       border-radius: 0 6px 6px 0; font-size: 12px; color: #666;
     }
+    .manual-link-row {
+      padding: 12px 24px 16px; border-top: 1px solid #f0f0f0;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .manual-link-label { font-size: 12px; color: #888; white-space: nowrap; }
+    .manual-link-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; color: #cc1933;
+      text-decoration: none; border: 1.5px solid #cc1933;
+      border-radius: 6px; padding: 5px 12px; transition: all 0.18s;
+    }
+    .manual-link-btn:hover { background: #cc1933; color: #fff; }
 
     /* ─── RESOLUTION ─── */
     .resolution {
@@ -579,6 +591,13 @@ function doSearch(query) {
           <span class="q-text">${escHtml(faq.q)}</span>
         </div>
         <div class="answer-card-a">${faq.a}</div>
+        <div class="manual-link-row">
+          <span class="manual-link-label">こちらのマニュアルも参考にしてください</span>
+          <a class="manual-link-btn" href="https://xacti-co.com/wp-content/uploads/2025/08/Quick-Manual_CX-WL100W_2025-08.pdf" target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            CX-WL100W クイックマニュアル（PDF）
+          </a>
+        </div>
         <div class="resolution" id="res-${blockId}">
           <p>この回答で解決しましたか？</p>
           <div class="resolution-btns">
