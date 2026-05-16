@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AIソリューション相談 | Xacti サポート</title>
+  <title>ソリューション提案 | Xacti</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -161,7 +161,7 @@
       font-weight: 600;
     }
     .msg-user-bubble {
-      background: #cc1933;
+      background: #4a4a4a;
       color: #fff;
       border-radius: 12px 2px 12px 12px;
       padding: 14px 18px;
@@ -191,7 +191,7 @@
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #1a2640, #2a3d5e);
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -306,6 +306,216 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ─── CONFIRM ─── */
+    .confirm-wrap {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #eee;
+    }
+    .confirm-text {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .confirm-btns {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-confirm-yes {
+      padding: 9px 22px;
+      background: #cc1933;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: default;
+    }
+    .btn-confirm-more {
+      padding: 9px 22px;
+      background: #fff;
+      color: #666;
+      border: 1.5px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: default;
+    }
+
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 22px 0 12px;
+      padding: 0 0 10px 14px;
+      border-left: 4px solid #cc1933;
+      border-bottom: 1px solid #eee;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+    }
+
+    /* ─── PROPOSAL BLOCK ─── */
+    .proposal-block {
+      margin-top: 8px;
+    }
+    .proposal-ai-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+    .proposal-ai-text {
+      background: #fff;
+      border-radius: 2px 12px 12px 12px;
+      padding: 14px 18px;
+      font-size: 14px;
+      line-height: 1.75;
+      color: #1a1a1a;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    }
+    .proposal-card {
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .proposal-card-head {
+      background: linear-gradient(135deg, #1a2640 0%, #2a3d5e 100%);
+      padding: 20px 24px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .proposal-card-head-text { flex: 1; }
+    .proposal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      background: rgba(204,25,51,0.2);
+      border: 1px solid rgba(204,25,51,0.6);
+      color: #ff8097;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+    }
+    .proposal-card-head h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .proposal-card-head p {
+      font-size: 12px;
+      opacity: 0.6;
+    }
+    .proposal-preview-wrap {
+      position: relative;
+      max-height: 220px;
+      overflow: hidden;
+    }
+    .proposal-preview-inner {
+      padding: 20px 24px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #333;
+    }
+    .proposal-section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #cc1933;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      margin-top: 14px;
+    }
+    .proposal-section-title:first-child { margin-top: 0; }
+    .proposal-list {
+      list-style: none;
+      margin-bottom: 10px;
+    }
+    .proposal-list li {
+      padding: 3px 0 3px 14px;
+      position: relative;
+      color: #444;
+    }
+    .proposal-list li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: #cc1933;
+      font-size: 10px;
+      top: 5px;
+    }
+    .proposal-product-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .proposal-product-chip {
+      background: #f0f4ff;
+      border: 1px solid #c5d3f0;
+      color: #2a3d5e;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+    .proposal-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.95) 100%);
+      pointer-events: none;
+    }
+    .proposal-actions {
+      display: flex;
+      gap: 10px;
+      padding: 14px 24px 18px;
+      border-top: 1px solid #f0f0f0;
+      background: #fafafa;
+    }
+    .btn-view-proposal {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border: 2px solid #1a2640;
+      border-radius: 6px;
+      color: #1a2640;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      background: #fff;
+      transition: all 0.2s;
+    }
+    .btn-view-proposal:hover { background: #1a2640; color: #fff; }
+    .btn-dl-proposal {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border: 2px solid #cc1933;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      background: #cc1933;
+      transition: background 0.2s;
+    }
+    .btn-dl-proposal:hover { background: #a8142a; border-color: #a8142a; }
+
     /* ─── INPUT BAR ─── */
     .input-bar {
       position: sticky;
@@ -372,9 +582,10 @@
       <img src="https://xacti-co.com/wp-content/uploads/2021/12/cropped-Xacti-logo-21_Dec.png" alt="Xacti">
     </a>
     <nav>
-      <a href="#">ソリューション</a>
+      <a href="#">製品・サービス</a>
       <a href="#">導入事例</a>
-      <a href="#" class="active">サポート</a>
+      <a href="solution.html" class="active">ソリューション</a>
+      <a href="faq.html">サポート</a>
       <a href="#">会社情報</a>
       <a href="#" class="header-contact">お問い合わせ</a>
     </nav>
@@ -385,10 +596,9 @@
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
     <a href="#">ホーム</a><span class="breadcrumb-sep">›</span>
-    <a href="#">サポート</a><span class="breadcrumb-sep">›</span>
-    <a href="solution.html">ソリューション事例検索</a><span class="breadcrumb-sep">›</span>
-    <a href="ai-chat.html">AIに相談する</a><span class="breadcrumb-sep">›</span>
-    <span>相談中</span>
+    <a href="solution.html">ソリューション</a><span class="breadcrumb-sep">›</span>
+    <a href="ai-chat.html">AIソリューション相談</a><span class="breadcrumb-sep">›</span>
+    <span>ソリューション提案</span>
   </div>
 </div>
 
@@ -423,17 +633,10 @@
       <div class="user-avatar">👤</div>
     </div>
 
-    <!-- ── AIの最初の返答 ── -->
+    <!-- ── AI 返答①：課題整理 ── -->
     <div class="msg-ai msg-fade">
       <div class="ai-avatar">
-        <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
-          <rect x="5" y="8" width="22" height="16" rx="3" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none"/>
-          <circle cx="11" cy="15" r="2" fill="#cc1933"/>
-          <circle cx="21" cy="15" r="2" fill="#cc1933"/>
-          <path d="M11 20 Q16 23 21 20" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-          <line x1="16" y1="8" x2="16" y2="4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="16" cy="3" r="1.5" fill="#cc1933"/>
-        </svg>
+        <img src="img/xacti-chat.png" style="width:100%;height:100%;object-fit:cover;" alt="">
       </div>
       <div class="msg-ai-body">
         <div class="msg-ai-name">Xacti AI</div>
@@ -442,18 +645,35 @@
             <span class="emp">ベテラン社員への業務集中と、若手の育成が同時に進められない</span>という状況ですね。
             これは現在の製造・設備・建設業界において非常に多くの企業が直面している、深刻かつ急務の課題です。
           </p>
-
           <div class="summary-box">
             <strong>お客様の課題を整理しました</strong>
             ・ベテラン社員への業務負荷が集中しており、疲弊・離職リスクがある<br>
             ・ベテランが現場を離れられないため、若手への直接指導の時間がとれない<br>
             ・若手が現場に張り付いていることで、体系的な教育機会がない
           </div>
+          <div class="confirm-wrap">
+            <p class="confirm-text">この課題認識でよろしいですか？</p>
+            <div class="confirm-btns">
+              <button class="btn-confirm-yes" onclick="showSolutions(this)">はい、進めてください</button>
+              <button class="btn-confirm-more">補足する</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- ── AI 返答②：ソリューション事例 ── -->
+    <div class="msg-ai msg-fade" id="ai-response-2" style="display:none">
+      <div class="ai-avatar">
+        <img src="img/xacti-chat.png" style="width:100%;height:100%;object-fit:cover;" alt="">
+      </div>
+      <div class="msg-ai-body">
+        <div class="msg-ai-name">Xacti AI</div>
+        <div class="msg-ai-bubble">
           <p>
-            Xactiのウェアラブルカメラと遠隔支援ソリューションにより、<span class="emp">ベテランが現場を離れながらも若手をリアルタイムで指導できる</span>環境を構築した事例がございます。また、作業映像を蓄積してOJT動画ライブラリを構築することで、「ベテランなしでも学べる仕組み」を整えた企業もあります。
+            ありがとうございます。Xactiのウェアラブルカメラと遠隔支援ソリューションにより、<span class="emp">ベテランが現場を離れながらも若手をリアルタイムで指導できる</span>環境を構築した事例がございます。近い事例をご紹介します。
           </p>
-
+          <p class="section-label">ソリューション事例</p>
           <div class="solution-cards">
             <a class="sol-card" href="https://xacti-co.com/casestudies/plants_or_facilities/" target="_blank">
               <div class="sol-card-icon">🏗️</div>
@@ -496,12 +716,98 @@
             </a>
           </div>
 
-          <div class="followup-prompt">
-            他にも詳しい状況（業種・現場規模・現在の体制など）があれば教えてください。より絞り込んだご提案ができます。
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AI 返答③：提案書の確認 ── -->
+    <div class="msg-ai msg-fade" id="ai-response-3" style="display:none">
+      <div class="ai-avatar">
+        <img src="img/xacti-chat.png" style="width:100%;height:100%;object-fit:cover;" alt="">
+      </div>
+      <div class="msg-ai-body">
+        <div class="msg-ai-name">Xacti AI</div>
+        <div class="msg-ai-bubble">
+          <p>ご状況をもとに、貴社に最適なXactiソリューションの提案書を作成できます。ご希望されますか？</p>
+          <div class="confirm-wrap">
+            <div class="confirm-btns">
+              <button class="btn-confirm-yes" onclick="showProposal(this)">はい、作成してください</button>
+              <button class="btn-confirm-more" onclick="declineProposal(this)">今回は不要です</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- ── ソリューション提案ブロック ── -->
+    <div class="proposal-block msg-fade" id="proposal-block" style="display:none">
+
+      <!-- AI の導入メッセージ -->
+      <div class="proposal-ai-row">
+        <div class="ai-avatar">
+          <img src="img/xacti-chat.png" style="width:100%;height:100%;object-fit:cover;" alt="">
+        </div>
+        <div>
+          <div class="msg-ai-name">Xacti AI</div>
+          <div class="proposal-ai-text">
+            入力いただいた課題をもとに、最適なXactiソリューションを組み合わせた<strong>ソリューション提案書</strong>を作成しました。一部をプレビューで確認いただけます。
+          </div>
+        </div>
+      </div>
+
+      <!-- 提案書プレビューカード -->
+      <div class="proposal-card">
+        <div class="proposal-card-head">
+          <div class="proposal-card-head-text">
+            <div class="proposal-badge">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              AI生成 ソリューション提案
+            </div>
+            <h3>Xacti ソリューション提案書</h3>
+            <p id="proposal-meta">貴社向けカスタム提案 · ―</p>
+          </div>
+        </div>
+
+        <div class="proposal-preview-wrap">
+          <div class="proposal-preview-inner">
+            <p class="proposal-section-title">■ 課題の整理</p>
+            <ul class="proposal-list">
+              <li>ベテラン社員への業務集中により、疲弊・離職リスクが高まっている</li>
+              <li>ベテランが現場を離れられず、若手への直接指導時間が確保できない</li>
+              <li>若手が現場に張り付くことで、体系的な教育機会が生まれていない</li>
+            </ul>
+
+            <p class="proposal-section-title">■ 提案ソリューション構成</p>
+            <ul class="proposal-list">
+              <li>ウェアラブルカメラ（CX-WLシリーズ）による手元映像のリアルタイム共有</li>
+              <li>XBPクラウドを活用した作業映像の蓄積・OJT動画ライブラリ化</li>
+              <li>AR遠隔指示機能でベテランが遠隔から図示・指示を送信</li>
+            </ul>
+
+            <p class="proposal-section-title">■ 推奨製品・サービス</p>
+            <div class="proposal-product-row">
+              <span class="proposal-product-chip">CX-WLシリーズ</span>
+              <span class="proposal-product-chip">XBPクラウド</span>
+              <span class="proposal-product-chip">AR遠隔指示</span>
+              <span class="proposal-product-chip">ライブ配信</span>
+            </div>
+          </div>
+          <div class="proposal-fade"></div>
+        </div>
+
+        <div class="proposal-actions">
+          <a class="btn-view-proposal" href="solution-proposal.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+            別画面で見る
+          </a>
+          <a class="btn-dl-proposal" href="solution-proposal.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            PDFでダウンロードする
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /proposal-block -->
 
   </div><!-- /messages -->
 </div><!-- /chat-layout -->
@@ -520,6 +826,37 @@
 </div>
 
 <script>
+  function showEl(id) {
+    const el = document.getElementById(id);
+    el.style.display = '';
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+  }
+
+  function disableBtns(btn) {
+    btn.closest('.confirm-btns').querySelectorAll('button').forEach(b => {
+      b.disabled = true;
+      b.style.opacity = '0.45';
+      b.style.cursor = 'not-allowed';
+    });
+    btn.style.opacity = '1';
+    btn.style.cursor = 'default';
+  }
+
+  function showSolutions(btn) {
+    disableBtns(btn);
+    setTimeout(() => { showEl('ai-response-2'); }, 300);
+    setTimeout(() => { showEl('ai-response-3'); }, 700);
+  }
+
+  function showProposal(btn) {
+    disableBtns(btn);
+    setTimeout(() => { showEl('proposal-block'); }, 400);
+  }
+
+  function declineProposal(btn) {
+    disableBtns(btn);
+  }
+
   function handleKey(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   }
@@ -567,14 +904,7 @@
     div.className = 'msg-ai msg-fade';
     div.innerHTML = `
       <div class="ai-avatar">
-        <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
-          <rect x="5" y="8" width="22" height="16" rx="3" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none"/>
-          <circle cx="11" cy="15" r="2" fill="#cc1933"/>
-          <circle cx="21" cy="15" r="2" fill="#cc1933"/>
-          <path d="M11 20 Q16 23 21 20" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-          <line x1="16" y1="8" x2="16" y2="4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="16" cy="3" r="1.5" fill="#cc1933"/>
-        </svg>
+        <img src="img/xacti-chat.png" style="width:100%;height:100%;object-fit:cover;" alt="">
       </div>
       <div class="msg-ai-body">
         <div class="msg-ai-name">Xacti AI</div>
@@ -584,6 +914,24 @@
     div.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }
 
+  (function() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = now.getMonth() + 1;
+    const d = now.getDate();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+
+    let serial = sessionStorage.getItem('xacti-proposal-serial');
+    if (!serial) {
+      serial = 'AGP ' + String(Math.floor(Math.random() * 100000)).padStart(7, '0');
+      sessionStorage.setItem('xacti-proposal-serial', serial);
+    }
+
+    const el = document.getElementById('proposal-meta');
+    if (el) el.textContent = `${serial} · ${y}年${m}月${d}日（${hh}:${mm}）`;
+  })();
+
   function showTyping() {
     return new Promise(resolve => {
       const msgs = document.getElementById('messages');
@@ -592,14 +940,7 @@
       div.id = 'typing';
       div.innerHTML = `
         <div class="ai-avatar">
-          <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
-            <rect x="5" y="8" width="22" height="16" rx="3" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none"/>
-            <circle cx="11" cy="15" r="2" fill="#cc1933"/>
-            <circle cx="21" cy="15" r="2" fill="#cc1933"/>
-            <path d="M11 20 Q16 23 21 20" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <line x1="16" y1="8" x2="16" y2="4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="16" cy="3" r="1.5" fill="#cc1933"/>
-          </svg>
+          <img src="img/xacti-chat.png" style="width:100%;height:100%;object-fit:cover;" alt="">
         </div>
         <div class="msg-ai-body">
           <div class="msg-ai-name">Xacti AI</div>

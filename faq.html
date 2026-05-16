@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ・よくあるご質問 | Xacti サポート</title>
+  <title>サポートセンター | Xacti</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -601,9 +601,10 @@
       <img src="https://xacti-co.com/wp-content/uploads/2021/12/cropped-Xacti-logo-21_Dec.png" alt="Xacti">
     </a>
     <nav>
-      <a href="#">ソリューション</a>
+      <a href="#">製品・サービス</a>
       <a href="#">導入事例</a>
-      <a href="#" class="active">サポート</a>
+      <a href="solution.html">ソリューション</a>
+      <a href="faq.html" class="active">サポート</a>
       <a href="#">会社情報</a>
       <a href="#" class="header-contact">お問い合わせ</a>
     </nav>
@@ -615,9 +616,7 @@
   <div class="breadcrumb-inner">
     <a href="#">ホーム</a>
     <span class="breadcrumb-sep">›</span>
-    <a href="#">サポート</a>
-    <span class="breadcrumb-sep">›</span>
-    <span>FAQ・よくあるご質問</span>
+    <span>サポートセンター</span>
   </div>
 </div>
 
@@ -625,10 +624,6 @@
 <section class="page-hero">
   <h1>サポートセンター</h1>
   <p>製品に関するご不明点・トラブルを素早く解決します</p>
-  <div class="page-hero-tabs">
-    <a href="faq.html" class="page-hero-tab active">FAQ・よくあるご質問</a>
-    <a href="solution.html" class="page-hero-tab">ソリューション事例検索</a>
-  </div>
 </section>
 
 <!-- ─── SEARCH BAR ─── -->
@@ -636,8 +631,8 @@
   <div class="search-inner">
     <p class="search-label">キーワードでFAQを検索</p>
     <div class="search-bar">
-      <input type="text" placeholder="例：電源が入らない、Wi-Fi接続、エラーコード E-101 …">
-      <button>
+      <input type="text" placeholder="例：電源が入らない、Wi-Fi接続、エラーコード E-101 …" onkeydown="if(event.key==='Enter') window.location='faq-trouble-chat.html?demo=1'">
+      <button onclick="window.location='faq-trouble-chat.html?demo=1'">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         検索
       </button>
@@ -863,14 +858,10 @@
         <div class="ai-text">
           <span class="ai-label">AI SUPPORT</span>
           <h2>AIサポートで素早く解決</h2>
-          <p>症状や状況をチャットで入力するだけで、AIが最適な解決策を提案します。<br>まずは自由に入力するか、ヒアリング形式でお試しください。</p>
+          <p>症状や状況をキーワードで検索するか、ヒアリング形式でAIが最適な解決策を提案します。</p>
         </div>
         <div class="ai-actions">
           <a class="btn-ai-primary" href="faq-trouble-chat.html">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-            自由入力で質問する
-          </a>
-          <a class="btn-ai-secondary" href="#">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             トラブルヒアリングを開始
           </a>

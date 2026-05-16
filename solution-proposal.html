@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ソリューション提案書 | Xacti</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      color: #1a1a1a;
+      background: #f4f5f7;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ─── HEADER ─── */
+    header { background: #cc1933; position: sticky; top: 0; z-index: 100; }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo img { height: 36px; width: auto; filter: brightness(0) invert(1); }
+    nav { display: flex; align-items: center; gap: 32px; }
+    nav a {
+      text-decoration: none; color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500;
+      padding: 4px 0; border-bottom: 2px solid transparent; transition: all 0.2s;
+    }
+    nav a:hover, nav a.active { color: #fff; border-bottom-color: #fff; }
+    .header-contact {
+      background: #fff !important; color: #cc1933 !important; padding: 8px 20px !important;
+      border-bottom: none !important; font-size: 13px !important; font-weight: 700 !important; border-radius: 3px;
+    }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb { background: #f0f0f0; border-bottom: 1px solid #e8e8e8; }
+    .breadcrumb-inner {
+      max-width: 1200px; margin: 0 auto; padding: 10px 24px;
+      display: flex; align-items: center; gap: 8px; font-size: 12px; color: #666;
+    }
+    .breadcrumb a { color: #666; text-decoration: none; }
+    .breadcrumb a:hover { color: #cc1933; }
+    .breadcrumb-sep { color: #bbb; }
+
+    /* ─── ACTION BAR ─── */
+    .action-bar {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 12px 0;
+    }
+    .action-bar-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .action-bar-label {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px; color: #888; line-height: 1.6;
+    }
+    .ai-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      background: rgba(204,25,51,0.08); border: 1px solid rgba(204,25,51,0.3);
+      color: #cc1933; padding: 3px 10px; border-radius: 20px;
+    }
+    .action-btns { display: flex; gap: 10px; flex-shrink: 0; }
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 18px; border: 1.5px solid #ddd; border-radius: 6px;
+      color: #555; font-size: 13px; font-weight: 600; text-decoration: none;
+      background: #fff; transition: all 0.2s;
+    }
+    .btn-back:hover { border-color: #999; color: #1a1a1a; }
+    .btn-pdf {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 20px; border: 1.5px solid #cc1933; border-radius: 6px;
+      color: #fff; font-size: 13px; font-weight: 700; text-decoration: none;
+      background: #cc1933; transition: background 0.2s;
+    }
+    .btn-pdf:hover { background: #a8142a; border-color: #a8142a; }
+
+    /* ─── PROPOSAL WRAP ─── */
+    .proposal-wrap {
+      max-width: 900px; margin: 36px auto 80px; padding: 0 24px;
+    }
+
+    /* ─── DOCUMENT ─── */
+    .doc {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+      overflow: hidden;
+    }
+
+    /* cover */
+    .doc-cover {
+      background: linear-gradient(135deg, #1a2640 0%, #2a3d5e 100%);
+      padding: 52px 56px 44px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .doc-cover::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .doc-cover::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: 30%;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(204,25,51,0.12);
+    }
+    .doc-cover-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .doc-serial-num {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+    }
+    .doc-cover-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      background: rgba(204,25,51,0.2); border: 1px solid rgba(204,25,51,0.5);
+      color: #ff8097; padding: 4px 12px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .doc-cover h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+    .doc-cover-sub { font-size: 15px; opacity: 0.65; margin-bottom: 28px; }
+    .doc-cover-meta {
+      display: flex; gap: 32px; flex-wrap: wrap;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .doc-cover-meta-item { font-size: 12px; }
+    .doc-cover-meta-item label { display: block; opacity: 0.5; font-size: 10px; letter-spacing: 0.08em; margin-bottom: 3px; }
+    .doc-cover-meta-item span { font-weight: 600; }
+
+    /* body */
+    .doc-body { padding: 44px 56px 52px; }
+
+    .doc-section { margin-bottom: 40px; }
+    .doc-section-title {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 16px; font-weight: 700; color: #1a1a1a;
+      margin-bottom: 16px; padding-bottom: 10px;
+      border-bottom: 2px solid #cc1933;
+    }
+    .doc-section-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: #cc1933; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; flex-shrink: 0;
+    }
+
+    /* challenge box */
+    .challenge-list { display: flex; flex-direction: column; gap: 10px; }
+    .challenge-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 14px 18px;
+    }
+    .challenge-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: #fff0f2; display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .challenge-text strong { font-size: 14px; font-weight: 700; display: block; margin-bottom: 3px; }
+    .challenge-text span { font-size: 13px; color: #666; }
+
+    /* solution grid */
+    .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .solution-item {
+      border: 1.5px solid #e5e5e5; border-radius: 8px; overflow: hidden;
+    }
+    .solution-item-head {
+      background: #f8f8f8; padding: 12px 16px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .solution-item-head .si-icon {
+      width: 32px; height: 32px; border-radius: 6px;
+      background: #1a2640; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .solution-item-head strong { font-size: 13px; font-weight: 700; }
+    .solution-item-body { padding: 12px 16px; font-size: 13px; color: #555; line-height: 1.7; }
+
+    /* effect table */
+    .effect-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .effect-table th {
+      background: #1a2640; color: #fff; text-align: left;
+      padding: 10px 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+    }
+    .effect-table th:first-child { border-radius: 6px 0 0 0; width: 36%; }
+    .effect-table th:last-child { border-radius: 0 6px 0 0; }
+    .effect-table td { padding: 11px 16px; border-bottom: 1px solid #eee; color: #333; vertical-align: top; }
+    .effect-table tr:last-child td { border-bottom: none; }
+    .effect-table tr:nth-child(even) td { background: #fafafa; }
+    .effect-num { font-size: 18px; font-weight: 700; color: #cc1933; }
+    .effect-unit { font-size: 11px; color: #888; margin-left: 2px; }
+
+    /* product cards */
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .product-card {
+      border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; text-align: center;
+    }
+    .product-card-img {
+      height: 80px; background: linear-gradient(135deg, #1a2640, #2a3d5e);
+      display: flex; align-items: center; justify-content: center; font-size: 32px;
+    }
+    .product-card-body { padding: 12px; }
+    .product-card-body strong { font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px; }
+    .product-card-body p { font-size: 11px; color: #888; line-height: 1.5; }
+
+    /* flow */
+    .flow-steps { display: flex; align-items: flex-start; gap: 0; }
+    .flow-step { flex: 1; text-align: center; position: relative; }
+    .flow-step:not(:last-child)::after {
+      content: '›'; position: absolute; right: -8px; top: 12px;
+      font-size: 20px; color: #cc1933; font-weight: 700;
+    }
+    .flow-dot {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: #cc1933; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; margin: 0 auto 8px;
+    }
+    .flow-step strong { font-size: 12px; font-weight: 700; display: block; margin-bottom: 4px; }
+    .flow-step span { font-size: 11px; color: #888; }
+
+    /* cta */
+    .doc-cta {
+      background: linear-gradient(135deg, #1a2640 0%, #2a3d5e 100%);
+      border-radius: 8px; padding: 28px 32px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      color: #fff; margin-top: 40px;
+    }
+    .doc-cta h3 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+    .doc-cta p { font-size: 13px; opacity: 0.7; }
+    .btn-contact {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #cc1933; color: #fff; padding: 13px 28px; border-radius: 6px;
+      font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap;
+      transition: background 0.2s; flex-shrink: 0;
+    }
+    .btn-contact:hover { background: #a8142a; }
+
+    /* ─── FOOTER ─── */
+    footer { background: #cc1933; color: rgba(255,255,255,0.8); padding: 48px 24px 24px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.25);
+    }
+    .footer-logo img { height: 32px; filter: brightness(0) invert(1); }
+    .footer-links { display: flex; gap: 48px; }
+    .footer-col h4 { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 14px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 8px; }
+    .footer-col a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { display: flex; justify-content: space-between; font-size: 12px; }
+    .footer-bottom p { color: rgba(255,255,255,0.6); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <img src="https://xacti-co.com/wp-content/uploads/2021/12/cropped-Xacti-logo-21_Dec.png" alt="Xacti">
+    </a>
+    <nav>
+      <a href="#">製品・サービス</a>
+      <a href="#">導入事例</a>
+      <a href="solution.html" class="active">ソリューション</a>
+      <a href="faq.html">サポート</a>
+      <a href="#">会社情報</a>
+      <a href="#" class="header-contact">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="#">ホーム</a><span class="breadcrumb-sep">›</span>
+    <a href="solution.html">ソリューション</a><span class="breadcrumb-sep">›</span>
+    <a href="ai-chat.html">AIに相談する</a><span class="breadcrumb-sep">›</span>
+    <a href="ai-chat-conversation.html">ソリューション提案</a><span class="breadcrumb-sep">›</span>
+    <span>ソリューション提案書</span>
+  </div>
+</div>
+
+<!-- ACTION BAR -->
+<div class="action-bar">
+  <div class="action-bar-inner">
+    <div class="action-bar-label">
+      <span class="ai-badge">AI生成 提案書</span>
+      <span>ご入力いただいた課題をもとにXacti AIが作成した提案書です。内容の正確性には最大限配慮しておりますが、細部に誤りが含まれる場合があります。詳細は営業担当者へお問い合わせください。</span>
+    </div>
+    <div class="action-btns">
+      <a class="btn-back" href="ai-chat-conversation.html">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        相談画面に戻る
+      </a>
+      <a class="btn-pdf" href="solution-proposal.html" onclick="window.print(); return false;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        PDFでダウンロードする
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- PROPOSAL -->
+<div class="proposal-wrap">
+  <div class="doc">
+
+    <!-- COVER -->
+    <div class="doc-cover">
+      <div class="doc-cover-top-row">
+        <div class="doc-cover-badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          AI GENERATED PROPOSAL
+        </div>
+        <span id="doc-serial" class="doc-serial-num">AGP 0000000</span>
+      </div>
+      <h1>技術伝承・人手不足解消のための<br>Xacti ソリューション提案書</h1>
+      <p class="doc-cover-sub">ウェアラブルカメラ × 遠隔支援 × クラウド映像管理による現場DX</p>
+      <div class="doc-cover-meta">
+        <div class="doc-cover-meta-item">
+          <label>作成日時</label>
+          <span id="doc-date">―</span>
+        </div>
+        <div class="doc-cover-meta-item">
+          <label>対象課題</label>
+          <span>人手不足・省力化 ／ 技術伝承・OJT</span>
+        </div>
+        <div class="doc-cover-meta-item">
+          <label>作成</label>
+          <span>Xacti AI ソリューション相談</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="doc-body">
+
+      <!-- 1. 課題の整理 -->
+      <div class="doc-section">
+        <div class="doc-section-title">
+          <div class="doc-section-num">1</div>
+          課題の整理
+        </div>
+        <div class="challenge-list">
+          <div class="challenge-item">
+            <div class="challenge-icon">👥</div>
+            <div class="challenge-text">
+              <strong>ベテランへの業務集中・離職リスク</strong>
+              <span>ベテラン社員に作業・指導・判断が集中しており、過重負担による疲弊・離職リスクが高まっている。</span>
+            </div>
+          </div>
+          <div class="challenge-item">
+            <div class="challenge-icon">🎓</div>
+            <div class="challenge-text">
+              <strong>若手への指導時間が確保できない</strong>
+              <span>ベテランが現場を離れられないため、対面での直接指導が行えず、OJTが機能していない。</span>
+            </div>
+          </div>
+          <div class="challenge-item">
+            <div class="challenge-icon">📋</div>
+            <div class="challenge-text">
+              <strong>体系的な教育機会の欠如</strong>
+              <span>若手が現場に張り付く状況が続き、マニュアル・映像資産が蓄積されず、技術伝承の仕組みが整っていない。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 提案ソリューション -->
+      <div class="doc-section">
+        <div class="doc-section-title">
+          <div class="doc-section-num">2</div>
+          提案ソリューション構成
+        </div>
+        <div class="solution-grid">
+          <div class="solution-item">
+            <div class="solution-item-head">
+              <div class="si-icon">📹</div>
+              <strong>リアルタイム遠隔OJT</strong>
+            </div>
+            <div class="solution-item-body">
+              若手がウェアラブルカメラを装着し、手元・視点映像をリアルタイム送信。事務所にいるベテランが音声・AR指示で即座に指導できる環境を構築します。
+            </div>
+          </div>
+          <div class="solution-item">
+            <div class="solution-item-head">
+              <div class="si-icon">☁️</div>
+              <strong>OJT動画ライブラリ構築</strong>
+            </div>
+            <div class="solution-item-body">
+              作業映像をXBPクラウドに自動蓄積。ベテランが不在でも若手が手順動画を参照できる「いつでも学べる仕組み」を整備します。
+            </div>
+          </div>
+          <div class="solution-item">
+            <div class="solution-item-head">
+              <div class="si-icon">🎯</div>
+              <strong>AR遠隔指示</strong>
+            </div>
+            <div class="solution-item-body">
+              映像上に矢印・テキストを書き込み、図示しながら指示を送信。口頭説明だけでは伝わりにくい作業手順を正確に伝達します。
+            </div>
+          </div>
+          <div class="solution-item">
+            <div class="solution-item-head">
+              <div class="si-icon">📡</div>
+              <strong>多拠点一元管理</strong>
+            </div>
+            <div class="solution-item-body">
+              複数現場の映像・状況をクラウドで一元管理。少人数のベテランが複数拠点の若手を同時にサポートできる体制を実現します。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 期待効果 -->
+      <div class="doc-section">
+        <div class="doc-section-title">
+          <div class="doc-section-num">3</div>
+          期待される導入効果
+        </div>
+        <table class="effect-table">
+          <thead>
+            <tr>
+              <th>効果項目</th>
+              <th>改善内容</th>
+              <th>目安</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>OJT時間の創出</strong></td>
+              <td>遠隔指導により、ベテランが現場に出向かずに指導できる時間を確保</td>
+              <td><span class="effect-num">50</span><span class="effect-unit">%削減（移動）</span></td>
+            </tr>
+            <tr>
+              <td><strong>技術伝承の加速</strong></td>
+              <td>映像ライブラリ化により、教育コンテンツが蓄積・再利用可能になる</td>
+              <td><span class="effect-num">3</span><span class="effect-unit">ヶ月で整備</span></td>
+            </tr>
+            <tr>
+              <td><strong>現場出張コスト削減</strong></td>
+              <td>遠隔支援への切り替えにより、不要な現地出張を大幅に削減</td>
+              <td><span class="effect-num">40</span><span class="effect-unit">%減（目安）</span></td>
+            </tr>
+            <tr>
+              <td><strong>若手の習熟速度向上</strong></td>
+              <td>リアルタイム指導＋動画参照により、独り立ちまでの期間を短縮</td>
+              <td><span class="effect-num">30</span><span class="effect-unit">%短縮（目安）</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 4. 推奨製品 -->
+      <div class="doc-section">
+        <div class="doc-section-title">
+          <div class="doc-section-num">4</div>
+          推奨製品・サービス
+        </div>
+        <div class="product-grid">
+          <div class="product-card">
+            <div class="product-card-img">📹</div>
+            <div class="product-card-body">
+              <strong>CX-WLシリーズ</strong>
+              <p>ウェアラブルカメラ。両手フリーで作業しながら映像送信。防塵・防水対応。</p>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-card-img">☁️</div>
+            <div class="product-card-body">
+              <strong>XBPクラウド</strong>
+              <p>映像の蓄積・管理・共有プラットフォーム。OJT動画ライブラリとして活用可能。</p>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-card-img">🎯</div>
+            <div class="product-card-body">
+              <strong>AR遠隔指示</strong>
+              <p>映像上への書き込み機能。図示・テキスト・矢印で直感的に指示を伝達。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 導入ステップ -->
+      <div class="doc-section">
+        <div class="doc-section-title">
+          <div class="doc-section-num">5</div>
+          導入ステップ
+        </div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-dot">①</div>
+            <strong>ヒアリング</strong>
+            <span>現場・体制・規模の詳細確認</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">②</div>
+            <strong>トライアル</strong>
+            <span>機器貸出・試験運用</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">③</div>
+            <strong>導入・設定</strong>
+            <span>クラウド環境構築・機器設置</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">④</div>
+            <strong>運用開始</strong>
+            <span>研修・サポート体制整備</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">⑤</div>
+            <strong>効果測定</strong>
+            <span>KPIレビュー・改善提案</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="doc-cta">
+        <div>
+          <h3>この提案について、担当者に詳しく聞く</h3>
+          <p>導入事例・費用感・トライアルのご相談はお気軽にお問い合わせください。</p>
+        </div>
+        <a class="btn-contact" href="#">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          お問い合わせ・相談する
+        </a>
+      </div>
+
+    </div><!-- /doc-body -->
+  </div><!-- /doc -->
+</div><!-- /proposal-wrap -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="https://xacti-co.com/wp-content/uploads/2021/12/cropped-Xacti-logo-21_Dec.png" alt="Xacti">
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>サポート</h4>
+          <ul>
+            <li><a href="faq.html">FAQ・よくあるご質問</a></li>
+            <li><a href="solution.html">ソリューション事例検索</a></li>
+            <li><a href="#">ダウンロードセンター</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>製品・サービス</h4>
+          <ul>
+            <li><a href="#">現場DXソリューション</a></li>
+            <li><a href="#">安全DXソリューション</a></li>
+            <li><a href="#">XBPクラウド</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>会社情報</h4>
+          <ul>
+            <li><a href="#">会社概要</a></li>
+            <li><a href="#">お問い合わせ</a></li>
+            <li><a href="#">プライバシーポリシー</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Xacti Corporation. All Rights Reserved.</p>
+      <p>大阪本社 / 東京オフィス / インドネシア現地法人</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = now.getMonth() + 1;
+    const d = now.getDate();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById('doc-date').textContent =
+      `${y}年${m}月${d}日（${hh}:${mm}）`;
+
+    let serial = sessionStorage.getItem('xacti-proposal-serial');
+    if (!serial) {
+      serial = 'AGP ' + String(Math.floor(Math.random() * 100000)).padStart(7, '0');
+      sessionStorage.setItem('xacti-proposal-serial', serial);
+    }
+    document.getElementById('doc-serial').textContent = serial;
+  })();
+</script>
+</body>
+</html>

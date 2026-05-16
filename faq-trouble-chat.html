@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AIトラブルサポート | Xacti FAQ</title>
+  <title>AIサポートセンター | Xacti</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
       color: #1a1a1a; background: #f4f5f7; font-size: 15px; line-height: 1.6;
-      display: flex; flex-direction: column; min-height: 100vh;
     }
 
     /* ─── HEADER ─── */
-    header { background: #cc1933; flex-shrink: 0; }
+    header { background: #cc1933; }
     .header-inner {
       max-width: 1200px; margin: 0 auto; padding: 0 24px;
       display: flex; align-items: center; justify-content: space-between; height: 64px;
@@ -32,7 +31,7 @@
     }
 
     /* ─── BREADCRUMB ─── */
-    .breadcrumb { background: #f0f0f0; border-bottom: 1px solid #e8e8e8; flex-shrink: 0; }
+    .breadcrumb { background: #f0f0f0; border-bottom: 1px solid #e8e8e8; }
     .breadcrumb-inner {
       max-width: 1200px; margin: 0 auto; padding: 9px 24px;
       display: flex; align-items: center; gap: 8px; font-size: 12px; color: #666;
@@ -41,156 +40,169 @@
     .breadcrumb a:hover { color: #cc1933; }
     .breadcrumb-sep { color: #bbb; }
 
-    /* ─── PROGRESS BAR ─── */
-    .progress-bar { background: #fff; border-bottom: 1px solid #eee; flex-shrink: 0; padding: 14px 0; }
-    .progress-inner {
-      max-width: 760px; margin: 0 auto; padding: 0 24px;
-      display: flex; align-items: center;
+    /* ─── SEARCH HERO ─── */
+    .search-hero {
+      background: linear-gradient(135deg, #1a2640 0%, #2d3f5e 100%);
+      padding: 48px 24px 40px; text-align: center;
+      transition: padding 0.3s;
     }
-    .prog-step { display: flex; align-items: center; flex: 1; }
-    .prog-step:last-child { flex: 0; }
-    .prog-dot {
-      width: 30px; height: 30px; border-radius: 50%;
+    .search-hero.compact { padding: 24px 24px 28px; }
+    .hero-title-wrap {
       display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; flex-shrink: 0;
-      border: 2px solid #ddd; background: #fff; color: #bbb; transition: all 0.4s;
+      gap: 14px; margin-bottom: 8px;
+      transition: all 0.3s;
     }
-    .prog-dot.done  { background: #cc1933; border-color: #cc1933; color: #fff; }
-    .prog-dot.active { background: #fff; border-color: #cc1933; color: #cc1933; }
-    .prog-label {
-      font-size: 10px; color: #bbb; margin-left: 6px; white-space: nowrap; transition: color 0.3s;
-    }
-    .prog-label.done   { color: #999; }
-    .prog-label.active { color: #cc1933; font-weight: 700; }
-    .prog-line { flex: 1; height: 2px; background: #eee; margin: 0 6px; transition: background 0.4s; }
-    .prog-line.done { background: #cc1933; }
-
-    /* ─── CHAT LAYOUT ─── */
-    .chat-layout {
-      flex: 1; display: flex; flex-direction: column;
-      max-width: 760px; width: 100%; margin: 0 auto; padding: 28px 24px 0;
-    }
-    .messages { flex: 1; display: flex; flex-direction: column; gap: 22px; padding-bottom: 24px; }
-
-    /* ─── USER BUBBLE ─── */
-    .msg-user { display: flex; justify-content: flex-end; gap: 10px; align-items: flex-end; }
-    .msg-user-bubble {
-      background: #cc1933; color: #fff;
-      border-radius: 12px 2px 12px 12px;
-      padding: 12px 18px; font-size: 14px; line-height: 1.7; max-width: 480px;
-    }
-    .user-avatar {
-      width: 34px; height: 34px; border-radius: 50%; background: #ddd;
+    .search-hero.compact .hero-title-wrap { margin-bottom: 6px; }
+    .hero-ai-badge {
+      width: 46px; height: 46px; flex-shrink: 0;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px; flex-shrink: 0; align-self: flex-end;
+      transition: all 0.3s;
+    }
+    .search-hero.compact .hero-ai-badge { width: 34px; height: 34px; border-radius: 8px; }
+    .search-hero.compact .hero-ai-badge svg { width: 18px; height: 18px; }
+    .search-hero h1 { color: #fff; font-size: 26px; font-weight: 700; transition: font-size 0.3s; }
+    .search-hero.compact h1 { font-size: 20px; }
+    .hero-sub { color: rgba(255,255,255,0.65); font-size: 14px; margin-top: 8px; margin-bottom: 24px; transition: all 0.3s; }
+    .search-hero.compact .hero-sub { display: none; }
+
+    .search-box-wrap { max-width: 620px; margin: 0 auto; position: relative; }
+    .search-input {
+      width: 100%; padding: 16px 52px 16px 52px;
+      font-size: 16px; border: none; border-radius: 12px; outline: none;
+      box-shadow: 0 4px 28px rgba(0,0,0,0.25); font-family: inherit; color: #1a1a1a;
+      transition: box-shadow 0.2s;
+    }
+    .search-input:focus { box-shadow: 0 4px 28px rgba(0,0,0,0.3), 0 0 0 3px rgba(204,25,51,0.35); }
+    .search-input::placeholder { color: #bbb; }
+    .search-icon-wrap {
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      pointer-events: none; color: #bbb;
+    }
+    .search-btn {
+      position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+      background: #cc1933; border: none; border-radius: 8px; width: 40px; height: 36px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .search-btn:hover { background: #a8142a; }
+
+    /* ─── POPULAR TAGS ─── */
+    .popular-tags {
+      max-width: 620px; margin: 16px auto 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+      transition: all 0.3s;
+    }
+    .search-hero.compact .popular-tags { display: none; }
+    .pop-tag {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.85); border-radius: 20px; padding: 5px 14px;
+      font-size: 12px; cursor: pointer; transition: all 0.18s; font-family: inherit;
+    }
+    .pop-tag:hover { background: rgba(255,255,255,0.22); color: #fff; }
+
+    /* ─── THREAD ─── */
+    .thread { max-width: 720px; margin: 0 auto; padding: 32px 24px 80px; display: flex; flex-direction: column; gap: 0; }
+
+    /* ─── ANSWER BLOCK ─── */
+    .answer-block { margin-bottom: 8px; animation: fadeUp 0.35s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+    .query-label {
+      font-size: 12px; color: #999; font-weight: 500; letter-spacing: 0.04em;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+    }
+    .query-label::before { content:''; display:block; width:16px; height:1px; background:#ccc; }
+    .query-label span { color: #555; font-weight: 700; }
+
+    .answer-card {
+      background: #fff; border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07); overflow: hidden;
+    }
+    .answer-card-q {
+      padding: 18px 24px 14px; border-bottom: 1px solid #f0f0f0;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .q-mark { color: #cc1933; font-weight: 900; font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+    .q-text { font-size: 15px; font-weight: 700; color: #1a1a1a; line-height: 1.5; }
+    .answer-card-a { padding: 18px 24px; }
+    .answer-card-a p { font-size: 13px; line-height: 1.85; color: #444; }
+    .answer-card-a p + p { margin-top: 8px; }
+    .answer-card-a ol, .answer-card-a ul { padding-left: 20px; font-size: 13px; line-height: 1.85; color: #444; }
+    .answer-card-a li { margin-bottom: 5px; }
+    .a-note {
+      margin-top: 14px; padding: 10px 14px;
+      background: #fff0f2; border-left: 3px solid #cc1933;
+      border-radius: 0 6px 6px 0; font-size: 12px; color: #666;
     }
 
-    /* ─── AI BUBBLE ─── */
-    .msg-ai { display: flex; gap: 12px; align-items: flex-start; }
-    .ai-avatar {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: linear-gradient(135deg, #1a2640, #2a3d5e);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    /* ─── RESOLUTION ─── */
+    .resolution {
+      padding: 18px 24px; border-top: 1px solid #f0f0f0;
+      background: #fafafa;
     }
-    .msg-ai-body { flex: 1; min-width: 0; }
-    .msg-ai-name { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.05em; margin-bottom: 5px; }
-    .msg-ai-bubble {
-      background: #fff; border-radius: 2px 12px 12px 12px;
-      padding: 16px 20px; font-size: 14px; line-height: 1.8;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.07); display: inline-block; width: 100%;
+    .resolution p { font-size: 13px; color: #666; margin-bottom: 12px; }
+    .resolution-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-resolved {
+      display: flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 700;
+      cursor: pointer; border: none; font-family: inherit; transition: all 0.2s;
     }
-    .msg-ai-bubble p + p { margin-top: 8px; }
-    .emp { color: #cc1933; font-weight: 700; }
+    .btn-yes { background: #cc1933; color: #fff; }
+    .btn-yes:hover { background: #a8142a; }
+    .btn-no { background: #fff; color: #555; border: 1.5px solid #ddd; }
+    .btn-no:hover { border-color: #cc1933; color: #cc1933; }
+    .btn-resolved:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    /* ─── QUICK REPLIES ─── */
-    .quick-replies {
-      display: flex; flex-wrap: wrap; gap: 8px;
-      margin-top: 14px; padding-top: 12px; border-top: 1px solid #f0f0f0;
+    /* ─── RESOLVED MESSAGE ─── */
+    .resolved-msg {
+      background: #f0faf4; border: 1.5px solid #a8d8b8; border-radius: 10px;
+      padding: 18px 22px; display: flex; align-items: center; gap: 12px;
+      animation: fadeUp 0.3s ease; margin-top: 12px;
     }
-    .qr-btn {
-      background: #fff; border: 1.5px solid #ddd; border-radius: 20px;
-      padding: 8px 16px; font-size: 13px; font-weight: 500; color: #333;
-      cursor: pointer; transition: all 0.18s; font-family: inherit;
-    }
-    .qr-btn:hover { border-color: #cc1933; color: #cc1933; background: #fff8f9; }
-    .qr-btn.selected { border-color: #cc1933; background: #fff0f2; color: #cc1933; font-weight: 700; pointer-events: none; }
-    .qr-btn:disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+    .resolved-msg-icon { font-size: 24px; flex-shrink: 0; }
+    .resolved-msg p { font-size: 14px; color: #2a7a4a; font-weight: 600; }
+    .resolved-msg small { font-size: 12px; color: #5a9a6a; font-weight: 400; }
 
-    /* ─── RESULT ─── */
-    .result-summary {
-      background: #f8f8f8; border-left: 3px solid #cc1933;
-      border-radius: 0 8px 8px 0; padding: 14px 18px;
-      font-size: 13px; line-height: 1.8; color: #444; margin: 14px 0;
+    /* ─── NO MATCH ─── */
+    .no-match {
+      background: #fff; border-radius: 12px; padding: 32px 24px; text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07); animation: fadeUp 0.35s ease;
     }
-    .result-summary strong {
-      display: block; font-size: 11px; color: #cc1933;
-      font-weight: 700; letter-spacing: 0.08em; margin-bottom: 8px;
-    }
-    .manual-cards { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
-    .manual-card {
-      border: 1px solid #e5e5e5; border-radius: 8px; padding: 13px 16px;
-      text-decoration: none; color: inherit; display: flex;
-      align-items: center; gap: 12px; transition: all 0.2s; background: #fff;
-    }
-    .manual-card:hover { border-color: #cc1933; box-shadow: 0 3px 10px rgba(204,25,51,0.1); }
-    .manual-icon {
-      width: 40px; height: 40px; border-radius: 7px; background: #fff0f2;
-      display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
-    }
-    .manual-body { flex: 1; }
-    .manual-body strong { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; }
-    .manual-body span { font-size: 12px; color: #888; }
-    .manual-arrow { color: #ccc; }
-    .contact-banner {
-      margin-top: 14px; background: #1a2640; border-radius: 8px;
-      padding: 16px 20px; display: flex; align-items: center;
-      justify-content: space-between; gap: 16px;
-    }
-    .contact-banner p { color: rgba(255,255,255,0.85); font-size: 13px; line-height: 1.6; }
-    .contact-banner p strong { color: #fff; display: block; font-size: 14px; margin-bottom: 2px; }
-    .btn-contact {
-      background: #cc1933; color: #fff; border: none; padding: 10px 22px;
-      border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer;
-      white-space: nowrap; flex-shrink: 0; text-decoration: none; transition: background 0.2s;
-    }
-    .btn-contact:hover { background: #a8142a; }
+    .no-match-icon { font-size: 36px; margin-bottom: 12px; }
+    .no-match p { font-size: 14px; color: #666; line-height: 1.7; }
 
-    /* ─── TYPING ─── */
-    .typing-dots { display: flex; gap: 5px; align-items: center; height: 18px; }
-    .typing-dots span {
-      width: 7px; height: 7px; background: #bbb; border-radius: 50%;
-      animation: tdot 1.2s infinite;
+    /* ─── FOLLOW-UP SEARCH ─── */
+    .followup-wrap {
+      margin-top: 16px; padding: 22px 24px;
+      background: #fff; border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      animation: fadeUp 0.35s ease;
     }
-    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes tdot { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
-
-    .msg-fade { animation: fadeUp 0.35s ease; }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-
-    /* ─── INPUT BAR ─── */
-    .input-bar {
-      position: sticky; bottom: 0; background: #fff;
-      border-top: 1px solid #e8e8e8; padding: 12px 24px 16px; flex-shrink: 0;
-    }
-    .input-bar-inner { max-width: 760px; margin: 0 auto; }
-    .input-row { display: flex; gap: 10px; align-items: flex-end; }
-    .input-row textarea {
+    .followup-wrap p { font-size: 13px; color: #888; margin-bottom: 12px; }
+    .followup-input-row { display: flex; gap: 10px; }
+    .followup-input {
       flex: 1; border: 1.5px solid #ddd; border-radius: 8px; padding: 11px 15px;
-      font-size: 14px; font-family: inherit; resize: none; height: 50px; outline: none;
-      color: #1a1a1a; transition: border-color 0.2s; line-height: 1.5;
+      font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s;
     }
-    .input-row textarea:focus { border-color: #cc1933; }
-    .input-row textarea::placeholder { color: #bbb; }
-    .input-row textarea:disabled { background: #f5f5f5; color: #bbb; cursor: not-allowed; }
-    .btn-send {
-      width: 44px; height: 44px; border-radius: 8px; background: #cc1933;
-      border: none; cursor: pointer; display: flex; align-items: center;
-      justify-content: center; flex-shrink: 0; transition: background 0.2s;
+    .followup-input:focus { border-color: #cc1933; }
+    .followup-input::placeholder { color: #bbb; }
+    .followup-btn {
+      background: #cc1933; color: #fff; border: none; border-radius: 8px;
+      padding: 0 20px; font-size: 13px; font-weight: 700; cursor: pointer;
+      font-family: inherit; transition: background 0.2s; white-space: nowrap;
     }
-    .btn-send:hover { background: #a8142a; }
-    .btn-send:disabled { background: #ddd; cursor: not-allowed; }
-    .input-hint { font-size: 11px; color: #bbb; margin-top: 6px; text-align: center; }
+    .followup-btn:hover { background: #a8142a; }
+
+    /* ─── DIVIDER ─── */
+    .thread-divider {
+      display: flex; align-items: center; gap: 12px; margin: 20px 0;
+      color: #bbb; font-size: 12px;
+    }
+    .thread-divider::before, .thread-divider::after {
+      content: ''; flex: 1; height: 1px; background: #e8e8e8;
+    }
   </style>
 </head>
 <body>
@@ -200,8 +212,11 @@
   <div class="header-inner">
     <a class="logo" href="#"><img src="https://xacti-co.com/wp-content/uploads/2021/12/cropped-Xacti-logo-21_Dec.png" alt="Xacti"></a>
     <nav>
-      <a href="#">ソリューション</a><a href="#">導入事例</a>
-      <a href="#" class="active">サポート</a><a href="#">会社情報</a>
+      <a href="#">製品・サービス</a>
+      <a href="#">導入事例</a>
+      <a href="solution.html">ソリューション</a>
+      <a href="faq.html" class="active">サポート</a>
+      <a href="#">会社情報</a>
       <a href="#" class="header-contact">お問い合わせ</a>
     </nav>
   </div>
@@ -211,367 +226,429 @@
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
     <a href="#">ホーム</a><span class="breadcrumb-sep">›</span>
-    <a href="faq.html">FAQ</a><span class="breadcrumb-sep">›</span>
-    <span>AIトラブルサポート</span>
+    <a href="faq.html">サポートセンター</a><span class="breadcrumb-sep">›</span>
+    <span>AIサポートセンター</span>
   </div>
 </div>
 
-<!-- PROGRESS BAR -->
-<div class="progress-bar">
-  <div class="progress-inner" id="progressInner">
-    <div class="prog-step">
-      <div class="prog-dot active" id="dot1">1</div>
-      <span class="prog-label active" id="lbl1">症状の選択</span>
-      <div class="prog-line" id="ln1"></div>
+<!-- SEARCH HERO -->
+<div class="search-hero" id="searchHero">
+  <div class="hero-title-wrap">
+    <div class="hero-ai-badge">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="7" y="7" width="10" height="10" rx="1.5" fill="rgba(255,255,255,0.15)"/>
+        <line x1="9" y1="7" x2="9" y2="4"/><line x1="12" y1="7" x2="12" y2="4"/><line x1="15" y1="7" x2="15" y2="4"/>
+        <line x1="9" y1="17" x2="9" y2="20"/><line x1="12" y1="17" x2="12" y2="20"/><line x1="15" y1="17" x2="15" y2="20"/>
+        <line x1="7" y1="9" x2="4" y2="9"/><line x1="7" y1="12" x2="4" y2="12"/><line x1="7" y1="15" x2="4" y2="15"/>
+        <line x1="17" y1="9" x2="20" y2="9"/><line x1="17" y1="12" x2="20" y2="12"/><line x1="17" y1="15" x2="20" y2="15"/>
+      </svg>
     </div>
-    <div class="prog-step">
-      <div class="prog-dot" id="dot2">2</div>
-      <span class="prog-label" id="lbl2">デバイス確認</span>
-      <div class="prog-line" id="ln2"></div>
-    </div>
-    <div class="prog-step">
-      <div class="prog-dot" id="dot3">3</div>
-      <span class="prog-label" id="lbl3">発生時期</span>
-      <div class="prog-line" id="ln3"></div>
-    </div>
-    <div class="prog-step">
-      <div class="prog-dot" id="dot4">4</div>
-      <span class="prog-label" id="lbl4">詳細状況</span>
-      <div class="prog-line" id="ln4"></div>
-    </div>
-    <div class="prog-step">
-      <div class="prog-dot" id="dot5">5</div>
-      <span class="prog-label" id="lbl5">回答</span>
-    </div>
+    <h1>AIサポートセンター</h1>
+  </div>
+  <p class="hero-sub">症状をそのまま入力してください</p>
+  <div class="search-box-wrap">
+    <span class="search-icon-wrap">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </span>
+    <input class="search-input" id="mainInput" type="text"
+      placeholder="例：映像が映らない、Wi-Fiに繋がらない…"
+      autocomplete="off"
+      onkeydown="if(event.key==='Enter') doSearch(this.value)">
+    <button class="search-btn" onclick="doSearch(document.getElementById('mainInput').value)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+  </div>
+  <div class="popular-tags" id="popularTags">
+    <button class="pop-tag" onclick="doSearch('映像が映らない')">映像が映らない</button>
+    <button class="pop-tag" onclick="doSearch('Wi-Fiに繋がらない')">Wi-Fiに繋がらない</button>
+    <button class="pop-tag" onclick="doSearch('録画できない')">録画できない</button>
+    <button class="pop-tag" onclick="doSearch('電源が入らない')">電源が入らない</button>
+    <button class="pop-tag" onclick="doSearch('エラーコード')">エラーコードが出た</button>
+    <button class="pop-tag" onclick="doSearch('充電できない')">充電できない</button>
   </div>
 </div>
 
-<!-- CHAT -->
-<div class="chat-layout">
-  <div class="messages" id="messages"></div>
-</div>
-
-<!-- INPUT BAR -->
-<div class="input-bar">
-  <div class="input-bar-inner">
-    <div class="input-row">
-      <textarea id="chatInput" placeholder="上の選択肢から選ぶか、こちらに直接入力してください" onkeydown="handleKey(event)"></textarea>
-      <button class="btn-send" id="sendBtn" onclick="sendFree()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      </button>
-    </div>
-    <p class="input-hint">Enterで送信 ／ Shift+Enterで改行</p>
-  </div>
-</div>
+<!-- THREAD -->
+<div class="thread" id="thread"></div>
 
 <script>
-  /* ── state ── */
-  let step = 1;
-  const ans = {};
+const FAQS = [
+  {
+    id: 1, cat: '映像', popular: true,
+    q: '映像が映らない・画面が真っ暗になる',
+    kw: ['映像', '映らない', '真っ暗', 'video', '表示されない', '画面', 'ブラック', '映像が出ない'],
+    a: `<p>以下の手順をお試しください。</p>
+        <ol>
+          <li>カメラの電源を一度オフにし、10秒後に再起動してください。</li>
+          <li>レンズカバーが開いているか確認してください。</li>
+          <li>バッテリー残量を確認し、十分に充電されているかご確認ください。</li>
+          <li>接続しているモニターやアプリを再起動してください。</li>
+          <li>別の接続ケーブル・ポートで試してください。</li>
+        </ol>
+        <div class="a-note">上記で解消しない場合は、センサーや内部基板の故障の可能性があります。Xactiサポートへお問い合わせください。</div>`
+  },
+  {
+    id: 2, cat: '映像', popular: false,
+    q: '映像にノイズや乱れが出る',
+    kw: ['ノイズ', '乱れ', 'ざらつき', '砂嵐', '縦線', '横線', 'ちらつき', '映像'],
+    a: `<p>映像の乱れはケーブル接触不良や照明環境が原因となることが多いです。</p>
+        <ol>
+          <li>接続ケーブルの差し込みを確認し、抜き差ししてください。</li>
+          <li>照明が強すぎる・逆光になっていないか確認してください。</li>
+          <li>近くに強い電磁波を発する機器がないか確認してください。</li>
+          <li>カメラとモニター／アプリを再起動してください。</li>
+          <li>ファームウェアを最新バージョンに更新してください。</li>
+        </ol>`
+  },
+  {
+    id: 3, cat: '映像', popular: false,
+    q: '映像がフリーズ・静止する',
+    kw: ['フリーズ', '止まる', '静止', '固まる', '動かない', '映像'],
+    a: `<p>フリーズは処理負荷・ネットワーク帯域・メモリ不足が主な原因です。</p>
+        <ol>
+          <li>カメラ・視聴アプリを再起動してください。</li>
+          <li>Wi-Fiの電波強度を確認してください。</li>
+          <li>映像解像度・フレームレートの設定を下げてみてください。</li>
+        </ol>`
+  },
+  {
+    id: 4, cat: '映像', popular: false,
+    q: '映像が暗い・色がおかしい',
+    kw: ['暗い', '明るさ', '色', '色合い', 'ホワイトバランス', '露出'],
+    a: `<p>露出・ホワイトバランスの設定で改善できる場合がほとんどです。</p>
+        <ol>
+          <li>アプリまたはウェブ設定画面から「明るさ（露出）」を調整してください。</li>
+          <li>「ホワイトバランス」を撮影環境に合わせて変更してください。</li>
+          <li>レンズ面が汚れていないか確認し、柔らかい布で拭いてください。</li>
+        </ol>`
+  },
+  {
+    id: 5, cat: '接続', popular: true,
+    q: 'Wi-Fiに接続できない・繋がらない',
+    kw: ['wifi', 'wi-fi', '無線', '接続', '繋がらない', 'ネットワーク', 'ssid'],
+    a: `<p>Wi-Fi接続の問題は以下の順序で確認してください。</p>
+        <ol>
+          <li>カメラを一度電源オフにして再起動してください。</li>
+          <li>スマートフォン側のWi-FiをオフにしてからONにしてください。</li>
+          <li>SSIDとパスワードが正しく入力されているか確認してください。</li>
+          <li>ルーターの2.4GHz帯に接続しているかご確認ください（5GHz非対応機種あり）。</li>
+          <li>ルーターを再起動してください。</li>
+        </ol>
+        <div class="a-note">セキュリティ設定が「WPA3のみ」のルーターでは接続できない場合があります。「WPA2/WPA3混在」モードに変更してください。</div>`
+  },
+  {
+    id: 6, cat: '接続', popular: false,
+    q: 'アプリがカメラを認識しない・接続できない',
+    kw: ['アプリ', '認識', 'スマホ', 'ペアリング', 'bluetooth'],
+    a: `<p>アプリとカメラのペアリングが切れている場合があります。</p>
+        <ol>
+          <li>スマートフォンのアプリを完全終了してから再起動してください。</li>
+          <li>BluetoothとWi-Fiを一度オフにしてからONにしてください。</li>
+          <li>アプリの「デバイス設定」からカメラを削除し、再ペアリングしてください。</li>
+          <li>アプリが最新バージョンかご確認ください。</li>
+        </ol>`
+  },
+  {
+    id: 7, cat: '接続', popular: false,
+    q: '接続が途中で切れる・不安定',
+    kw: ['切れる', '途切れる', '不安定', '頻繁', '再接続'],
+    a: `<p>接続が途切れる場合、電波環境または干渉が主な原因です。</p>
+        <ol>
+          <li>カメラとルーターの距離を縮めてください。</li>
+          <li>カメラとルーターの間に障害物がないか確認してください。</li>
+          <li>近くに他のWi-Fiルーターや電子レンジがある場合、別チャンネルに変更してください。</li>
+        </ol>`
+  },
+  {
+    id: 8, cat: '接続', popular: false,
+    q: 'PCからカメラが認識されない（USB接続）',
+    kw: ['pc', 'usb', 'windows', 'mac', 'パソコン', 'ドライバ', '認識されない'],
+    a: `<p>USB接続で認識されない場合の確認手順です。</p>
+        <ol>
+          <li>USBケーブルを別のポート・ケーブルで試してください。</li>
+          <li>カメラ側の接続モードが「ストレージ」または「UVC」になっているか確認してください。</li>
+          <li>Xactiサポートサイトから最新のUSBドライバをインストールしてください。</li>
+        </ol>`
+  },
+  {
+    id: 9, cat: '録画', popular: true,
+    q: 'SDカードが認識されない・エラーになる',
+    kw: ['sdカード', 'sd', 'microsd', 'カード', 'フォーマット', '録画'],
+    a: `<p>SDカードの互換性・フォーマットが原因のことが多いです。</p>
+        <ol>
+          <li>SDカードを一度取り出してから再挿入してください。</li>
+          <li>Class 10 / UHS-I 以上のSDカードを使用しているか確認してください。</li>
+          <li>カメラ本体の設定メニューからSDカードを「フォーマット」してください（データは消去されます）。</li>
+          <li>別のSDカードで動作するか確認してください。</li>
+        </ol>`
+  },
+  {
+    id: 10, cat: '録画', popular: false,
+    q: '録画が途中で止まる・自動停止する',
+    kw: ['録画', '止まる', '停止', '途中', '自動', 'recording'],
+    a: `<p>録画の自動停止はストレージ容量・温度・設定が原因の場合があります。</p>
+        <ol>
+          <li>SDカードの空き容量を確認してください。</li>
+          <li>設定メニューで「連続録画時間の上限」が設定されていないか確認してください。</li>
+          <li>カメラ本体が高温になっていないか確認してください（熱保護で停止します）。</li>
+        </ol>`
+  },
+  {
+    id: 11, cat: '録画', popular: false,
+    q: '録画した映像が保存されていない・消えている',
+    kw: ['保存', '消えた', '保存されない', 'データ', 'ファイル', 'なくなった'],
+    a: `<p>録画データの消失はいくつかの原因が考えられます。</p>
+        <ol>
+          <li>SDカードのフォルダ（DCIMフォルダなど）を直接確認してください。</li>
+          <li>録画ボタンを押した際に録画が開始されていたか（録画ランプの点灯）確認してください。</li>
+          <li>PCでディスクチェックを実施してください。</li>
+        </ol>
+        <div class="a-note">重要な録画データは定期的にPCやクラウドへのバックアップを推奨します。</div>`
+  },
+  {
+    id: 12, cat: '電源', popular: true,
+    q: '電源が入らない・起動しない',
+    kw: ['電源', '入らない', '起動', 'つかない', '反応しない', 'power'],
+    a: `<p>電源トラブルは充電不足・バッテリー劣化・本体フリーズが主な原因です。</p>
+        <ol>
+          <li>付属のACアダプターで1時間以上充電してから電源を入れてください。</li>
+          <li>充電中に充電ランプが点灯するか確認してください。</li>
+          <li>電源ボタンを5秒以上長押しして強制起動をお試しください。</li>
+          <li>リセットボタンをピンで押してください。</li>
+        </ol>
+        <div class="a-note">長期間使用しているバッテリーは劣化により起動できない場合があります。バッテリー交換についてはサポートにご相談ください。</div>`
+  },
+  {
+    id: 13, cat: '電源', popular: false,
+    q: 'バッテリーの減りが早い',
+    kw: ['バッテリー', '持ち', '減り', '持続', '消耗', 'battery'],
+    a: `<p>バッテリー消費を抑えるための設定と対処法をご確認ください。</p>
+        <ol>
+          <li>Wi-Fiや映像ストリーミングをオフにすると消費電力が大幅に削減されます。</li>
+          <li>解像度・フレームレートを下げると消費電力が下がります。</li>
+          <li>使用しないときは電源をオフにするか省電力モードに設定してください。</li>
+        </ol>`
+  },
+  {
+    id: 14, cat: '電源', popular: true,
+    q: '充電できない・充電ランプが点かない',
+    kw: ['充電', 'できない', 'ランプ', 'charge', 'ケーブル', 'アダプター'],
+    a: `<p>充電できない場合、ケーブル・アダプター・端子の状態を確認してください。</p>
+        <ol>
+          <li>充電ケーブルを別のものに交換してお試しください。</li>
+          <li>ACアダプターのコンセントへの接続を確認してください。</li>
+          <li>カメラ側の充電端子に汚れ・異物がないか確認し、エアダスターで清掃してください。</li>
+        </ol>
+        <div class="a-note">非純正のアダプター・ケーブルは充電できない場合があります。純正品または推奨品をご使用ください。</div>`
+  },
+  {
+    id: 15, cat: 'エラー', popular: true,
+    q: 'エラーコードが表示される',
+    kw: ['エラーコード', 'エラー', 'error', 'コード', '番号'],
+    a: `<p>エラーコードの意味は機種によって異なります。以下をご確認ください。</p>
+        <ol>
+          <li>表示されているエラーコードをメモしてください。</li>
+          <li>製品付属のマニュアルまたはXactiサポートサイトの「エラーコード一覧」をご参照ください。</li>
+          <li>本体を再起動してエラーが消えるかご確認ください。</li>
+          <li>再起動で解消しない場合は、エラーコードをサポート担当者にお伝えください。</li>
+        </ol>`
+  },
+  {
+    id: 16, cat: 'エラー', popular: false,
+    q: '警告ランプ（LED）が点灯・点滅している',
+    kw: ['警告', 'ランプ', 'led', '赤', '点滅', '点灯', 'ライト'],
+    a: `<ul>
+          <li><strong>赤点灯（連続）</strong>：バッテリー残量低下。すぐに充電してください。</li>
+          <li><strong>赤点滅（速い）</strong>：温度異常・システムエラー。電源を切り冷却してください。</li>
+          <li><strong>橙点滅</strong>：充電中。充電完了で消灯またはグリーンになります。</li>
+          <li><strong>青点滅</strong>：Wi-Fi接続待機中。</li>
+        </ul>
+        <div class="a-note">上記に当てはまらない点滅パターンは、製品マニュアルの「インジケーター一覧」をご参照ください。</div>`
+  },
+  {
+    id: 17, cat: 'エラー', popular: false,
+    q: '警告音・ビープ音が鳴る',
+    kw: ['警告音', 'ビープ', '音', 'beep', 'アラーム', 'ピー'],
+    a: `<ul>
+          <li><strong>短音×1</strong>：操作の確認音（正常）。</li>
+          <li><strong>短音×3</strong>：操作エラー。SDカードなしでの録画操作などが考えられます。</li>
+          <li><strong>長音×1</strong>：バッテリー低下警告。</li>
+          <li><strong>断続的な長音</strong>：システムエラー。再起動してください。</li>
+        </ul>`
+  },
+  {
+    id: 18, cat: '設定', popular: false,
+    q: '初期化（工場出荷状態にリセット）したい',
+    kw: ['初期化', 'リセット', '工場', '出荷', '元に戻す'],
+    a: `<p>初期化を行うと、すべての設定がリセットされます（録画データは消えません）。</p>
+        <ol>
+          <li>設定メニュー →「システム」→「初期化」を選択してください。</li>
+          <li>確認画面で「はい」を選択すると初期化が始まります。</li>
+          <li>初期化完了後、自動的に再起動します。</li>
+        </ol>
+        <div class="a-note">初期化後はWi-Fi設定を再度行う必要があります。事前に設定情報をメモしておくことをお勧めします。</div>`
+  },
+  {
+    id: 19, cat: '設定', popular: false,
+    q: 'ファームウェアの更新方法を教えてほしい',
+    kw: ['ファームウェア', 'firmware', 'アップデート', '更新', 'バージョン'],
+    a: `<p><strong>方法①：アプリ経由</strong></p>
+        <ol>
+          <li>アプリとカメラを接続し、「設定」→「カメラ情報」→「ファームウェアを確認」をタップ。</li>
+          <li>最新バージョンが表示された場合は「更新する」をタップしてください。</li>
+        </ol>
+        <p><strong>方法②：SDカード経由</strong></p>
+        <ol>
+          <li>Xactiサポートサイトからファームウェアファイルをダウンロードしてください。</li>
+          <li>SDカードのルートに配置してカメラに挿入し、電源を入れてください。</li>
+        </ol>
+        <div class="a-note">更新中はカメラの電源を切らないでください。故障の原因になります。</div>`
+  },
+  {
+    id: 20, cat: '設定', popular: false,
+    q: '日時がリセットされる・時刻がずれる',
+    kw: ['日時', '日付', '時刻', 'リセット', 'ずれる', '時間'],
+    a: `<ol>
+          <li>カメラをACアダプターに接続したまま24時間放置し、バックアップ電池を充電してください。</li>
+          <li>アプリ経由でNTP（ネットワーク時刻）自動同期が設定されているか確認してください。</li>
+          <li>上記で解消しない場合はバッテリー交換が必要です。サポートへご連絡ください。</li>
+        </ol>`
+  }
+];
 
-  const AVT = `<svg width="18" height="18" viewBox="0 0 32 32" fill="none">
-    <rect x="5" y="8" width="22" height="16" rx="3" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none"/>
-    <circle cx="11" cy="15" r="2" fill="#cc1933"/><circle cx="21" cy="15" r="2" fill="#cc1933"/>
-    <path d="M11 20 Q16 23 21 20" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <line x1="16" y1="8" x2="16" y2="4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
-    <circle cx="16" cy="3" r="1.5" fill="#cc1933"/>
-  </svg>`;
+function normalize(str) {
+  return str.toLowerCase()
+    .replace(/[ァ-ン]/g, s => String.fromCharCode(s.charCodeAt(0) - 0x60))
+    .replace(/　/g, ' ');
+}
 
-  /* ── progress ── */
-  function setProgress(active) {
-    for (let i = 1; i <= 5; i++) {
-      const dot = document.getElementById('dot' + i);
-      const lbl = document.getElementById('lbl' + i);
-      const ln  = i < 5 ? document.getElementById('ln' + i) : null;
-      if (i < active) {
-        dot.className = 'prog-dot done'; dot.innerHTML = '✓';
-        lbl.className = 'prog-label done';
-        if (ln) ln.className = 'prog-line done';
-      } else if (i === active) {
-        dot.className = 'prog-dot active'; dot.textContent = i;
-        lbl.className = 'prog-label active';
-        if (ln) ln.className = 'prog-line';
-      } else {
-        dot.className = 'prog-dot'; dot.textContent = i;
-        lbl.className = 'prog-label';
-        if (ln) ln.className = 'prog-line';
-      }
-    }
+function findBestMatch(query) {
+  const q = normalize(query.trim());
+  if (!q) return null;
+  const tokens = q.split(/\s+/).filter(Boolean);
+  let best = null, bestScore = 0;
+  for (const faq of FAQS) {
+    const target = normalize([faq.q, ...faq.kw].join(' '));
+    const score = tokens.filter(t => target.includes(t)).length;
+    if (score > bestScore) { bestScore = score; best = faq; }
+  }
+  return bestScore > 0 ? best : null;
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+let searchCount = 0;
+
+function doSearch(query) {
+  query = query.trim();
+  if (!query) return;
+
+  // Compact hero on first search
+  if (searchCount === 0) {
+    document.getElementById('searchHero').classList.add('compact');
+  }
+  searchCount++;
+
+  const thread = document.getElementById('thread');
+
+  // Add divider if not first
+  if (searchCount > 1) {
+    const div = document.createElement('div');
+    div.className = 'thread-divider';
+    div.textContent = '再検索';
+    thread.appendChild(div);
   }
 
-  /* ── render helpers ── */
-  function appendUser(text) {
-    const m = document.getElementById('messages');
-    const d = document.createElement('div');
-    d.className = 'msg-user msg-fade';
-    d.innerHTML = `<div class="msg-user-bubble">${text}</div><div class="user-avatar">👤</div>`;
-    m.appendChild(d);
-    d.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }
+  const faq = findBestMatch(query);
+  const blockId = 'block-' + searchCount;
 
-  function appendAI(html) {
-    const m = document.getElementById('messages');
-    const d = document.createElement('div');
-    d.className = 'msg-ai msg-fade';
-    d.innerHTML = `<div class="ai-avatar">${AVT}</div>
-      <div class="msg-ai-body">
-        <div class="msg-ai-name">Xacti サポート AI</div>
-        <div class="msg-ai-bubble">${html}</div>
+  const block = document.createElement('div');
+  block.className = 'answer-block';
+  block.id = blockId;
+
+  if (faq) {
+    block.innerHTML = `
+      <div class="query-label">「<span>${escHtml(query)}</span>」の検索結果</div>
+      <div class="answer-card">
+        <div class="answer-card-q">
+          <span class="q-mark">Q</span>
+          <span class="q-text">${escHtml(faq.q)}</span>
+        </div>
+        <div class="answer-card-a">${faq.a}</div>
+        <div class="resolution" id="res-${blockId}">
+          <p>この回答で解決しましたか？</p>
+          <div class="resolution-btns">
+            <button class="btn-resolved btn-yes" onclick="onResolved('${blockId}')">✅ 解決した</button>
+            <button class="btn-resolved btn-no" onclick="onNotResolved('${blockId}')">❓ まだ解決しない</button>
+          </div>
+        </div>
       </div>`;
-    m.appendChild(d);
-    d.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }
-
-  function typing() {
-    return new Promise(res => {
-      const m = document.getElementById('messages');
-      const d = document.createElement('div');
-      d.className = 'msg-ai msg-fade'; d.id = 'typing';
-      d.innerHTML = `<div class="ai-avatar">${AVT}</div>
-        <div class="msg-ai-body">
-          <div class="msg-ai-name">Xacti サポート AI</div>
-          <div class="msg-ai-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>
-        </div>`;
-      m.appendChild(d);
-      d.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      setTimeout(() => { d.remove(); res(); }, 900);
-    });
-  }
-
-  function disableQR(id) {
-    const el = document.getElementById(id);
-    if (el) el.querySelectorAll('.qr-btn').forEach(b => { b.disabled = true; });
-  }
-
-  function lockInput(placeholder) {
-    document.getElementById('chatInput').disabled = true;
-    document.getElementById('chatInput').placeholder = placeholder || '';
-    document.getElementById('sendBtn').disabled = true;
-  }
-
-  function unlockInput(placeholder) {
-    const el = document.getElementById('chatInput');
-    el.disabled = false;
-    el.placeholder = placeholder || '上の選択肢から選ぶか、こちらに直接入力してください';
-    document.getElementById('sendBtn').disabled = false;
-  }
-
-  /* ── STEP 1: 症状選択（ページロードで表示） ── */
-  window.addEventListener('DOMContentLoaded', () => {
-    setProgress(1);
-    appendAI(`
-      <p>こんにちは！Xacti AIサポートです。まず、<span class="emp">どのような症状</span>でお困りですか？</p>
-      <div class="quick-replies" id="qr1">
-        <button class="qr-btn" onclick="pickSymptom(this,'power','🔋 電源が入らない')">🔋 電源が入らない</button>
-        <button class="qr-btn" onclick="pickSymptom(this,'video','📺 映像が映らない')">📺 映像が映らない</button>
-        <button class="qr-btn" onclick="pickSymptom(this,'connect','📡 接続できない')">📡 接続できない</button>
-        <button class="qr-btn" onclick="pickSymptom(this,'error','⚠️ エラー表示が出ている')">⚠️ エラー表示が出ている</button>
-      </div>`);
-    unlockInput('症状を選ぶか、こちらに直接ご入力ください');
-  });
-
-  function pickSymptom(el, key, label) {
-    el.classList.add('selected'); disableQR('qr1');
-    ans.symptom = { key, label };
-    appendUser(label);
-    step = 2; setProgress(2);
-    lockInput();
-    typing().then(askDevice);
-  }
-
-  /* ── STEP 2: デバイス確認 ── */
-  function askDevice() {
-    appendAI(`
-      <p>承知しました。<span class="emp">${ans.symptom.label}</span>ですね。</p>
-      <p>次に、<span class="emp">お使いの製品</span>を教えてください。</p>
-      <div class="quick-replies" id="qr2">
-        <button class="qr-btn" onclick="pickDevice(this,'cx_wl','CX-WLシリーズ（現場DXカメラ）')">📷 CX-WLシリーズ</button>
-        <button class="qr-btn" onclick="pickDevice(this,'doboureco','ドボレコシリーズ（建設・土木向け）')">🏗️ ドボレコシリーズ</button>
-        <button class="qr-btn" onclick="pickDevice(this,'fokureco','フォクレコシリーズ（製造・工場向け）')">🏭 フォクレコシリーズ</button>
-        <button class="qr-btn" onclick="pickDevice(this,'unknown','わからない・その他')">❓ わからない・その他</button>
-      </div>`);
-    unlockInput('型番やシリーズ名を直接入力することもできます');
-  }
-
-  function pickDevice(el, key, label) {
-    el.classList.add('selected'); disableQR('qr2');
-    ans.device = { key, label };
-    appendUser(label);
-    step = 3; setProgress(3);
-    lockInput();
-    typing().then(askTiming);
-  }
-
-  /* ── STEP 3: 発生時期 ── */
-  function askTiming() {
-    appendAI(`
-      <p>ありがとうございます。<span class="emp">いつ頃から</span>この症状が起きていますか？</p>
-      <div class="quick-replies" id="qr3">
-        <button class="qr-btn" onclick="pickTiming(this,'today','今日・さっきから')">📅 今日・さっきから</button>
-        <button class="qr-btn" onclick="pickTiming(this,'few_days','2〜3日前から')">📅 2〜3日前から</button>
-        <button class="qr-btn" onclick="pickTiming(this,'week','1週間以上前から')">📅 1週間以上前から</button>
-        <button class="qr-btn" onclick="pickTiming(this,'from_start','購入直後・最初から')">📦 購入直後・最初から</button>
-      </div>`);
-    unlockInput('「昨日から」「先週から」など自由に入力できます');
-  }
-
-  function pickTiming(el, key, label) {
-    el.classList.add('selected'); disableQR('qr3');
-    ans.timing = { key, label };
-    appendUser(label);
-    step = 4; setProgress(4);
-    lockInput();
-    typing().then(askDetail);
-  }
-
-  /* ── STEP 4: 詳細状況 ── */
-  function askDetail() {
-    const ispower = ans.symptom.key === 'power';
-    const isvideo = ans.symptom.key === 'video';
-    const isconn  = ans.symptom.key === 'connect';
-
-    let q = ''; let opts = '';
-    if (ispower) {
-      q = '電源ボタンを押したとき、<span class="emp">どのような状態</span>になりますか？';
-      opts = `
-        <button class="qr-btn" onclick="pickDetail(this,'no_led','LEDが全く反応しない')">🔴 LEDが全く反応しない</button>
-        <button class="qr-btn" onclick="pickDetail(this,'blink','LEDが点滅して止まる')">🟡 LEDが点滅して止まる</button>
-        <button class="qr-btn" onclick="pickDetail(this,'halfway','起動途中で止まる・再起動を繰り返す')">🔄 起動途中で止まる</button>
-        <button class="qr-btn" onclick="pickDetail(this,'cable_only','充電中のみ動く')">🔌 充電中のみ動く</button>`;
-    } else if (isvideo) {
-      q = '映像の状態について、もう少し教えてください。';
-      opts = `
-        <button class="qr-btn" onclick="pickDetail(this,'no_image','画面が真っ暗・何も映らない')">⬛ 画面が真っ暗</button>
-        <button class="qr-btn" onclick="pickDetail(this,'noise','ノイズ・乱れがある')">📺 ノイズ・乱れがある</button>
-        <button class="qr-btn" onclick="pickDetail(this,'freeze','映像がフリーズする')">⏸️ 映像がフリーズする</button>
-        <button class="qr-btn" onclick="pickDetail(this,'partial','一部だけ映らない')">🔲 一部だけ映らない</button>`;
-    } else if (isconn) {
-      q = '接続の状況について教えてください。';
-      opts = `
-        <button class="qr-btn" onclick="pickDetail(this,'wifi_fail','Wi-Fiに繋がらない')">📶 Wi-Fiに繋がらない</button>
-        <button class="qr-btn" onclick="pickDetail(this,'app_fail','アプリが認識しない')">📱 アプリが認識しない</button>
-        <button class="qr-btn" onclick="pickDetail(this,'disconnect','繋がるが途中で切れる')">🔌 途中で切れる</button>
-        <button class="qr-btn" onclick="pickDetail(this,'pc_fail','PCから認識されない')">💻 PCから認識されない</button>`;
-    } else {
-      q = '表示されているエラーの内容を教えてください。';
-      opts = `
-        <button class="qr-btn" onclick="pickDetail(this,'code','エラーコードが表示されている')">🔢 エラーコードが表示</button>
-        <button class="qr-btn" onclick="pickDetail(this,'warning','警告ランプが点灯している')">⚠️ 警告ランプが点灯</button>
-        <button class="qr-btn" onclick="pickDetail(this,'freeze_err','画面がフリーズしている')">🛑 画面がフリーズ</button>
-        <button class="qr-btn" onclick="pickDetail(this,'sound','警告音が鳴っている')">🔔 警告音が鳴っている</button>`;
-    }
-
-    appendAI(`<p>${q}</p><div class="quick-replies" id="qr4">${opts}<button class="qr-btn" onclick="pickDetail(this,'other','その他・うまく説明できない')">❓ その他</button></div>`);
-    unlockInput('状況を詳しく教えてください');
-  }
-
-  function pickDetail(el, key, label) {
-    el.classList.add('selected'); disableQR('qr4');
-    ans.detail = { key, label };
-    appendUser(label);
-    step = 5; setProgress(5);
-    lockInput();
-    typing().then(showAnswer);
-  }
-
-  /* ── STEP 5: 回答 ── */
-  function showAnswer() {
-    const sk = ans.symptom.key;
-    const dk = ans.detail.key;
-
-    const diagnoses = {
-      power: {
-        no_led:    { text: '・バッテリーの完全放電が最も可能性の高い原因です。充電ケーブルを接続し、30分以上充電してから再度お試しください。<br>・充電器・ケーブル自体が正常か別の機器で確認してください。<br>・それでも変化がない場合はバッテリーの劣化・故障の可能性があります。', manuals: ['charge', 'battery', 'inquiry'] },
-        blink:     { text: '・LEDの点滅パターンによりエラー種別が特定できます。<br>・赤点滅：バッテリー残量不足 → 充電後に再試行<br>・橙点滅：ファームウェアエラー → 初期化をお試しください<br>・点滅回数をエラーコード表と照合することをおすすめします。', manuals: ['errorcode', 'firmware', 'reset'] },
-        halfway:   { text: '・ファームウェアの破損または設定ファイルの問題が考えられます。<br>・まず工場出荷時設定へのハードリセットをお試しください。<br>・リセット後も改善しない場合はファームウェアの再インストールが必要です。', manuals: ['reset', 'firmware', 'inquiry'] },
-        cable_only:{ text: '・バッテリーの劣化または接触不良が考えられます。<br>・バッテリーパックを一度取り外し、端子部分の汚れをやわらかい布で拭いてから再装着してください。<br>・バッテリー交換で解決するケースが多いです。', manuals: ['battery', 'terminal', 'inquiry'] },
-      },
-      video: {
-        no_image:  { text: '・接続ケーブルや出力設定をご確認ください。<br>・カメラの映像出力設定がオフになっている可能性があります。<br>・レンズカバーが装着されたままでないかご確認ください。', manuals: ['output', 'settings', 'inquiry'] },
-        noise:     { text: '・電波干渉や接続が不安定な状態が考えられます。<br>・Wi-Fi環境の改善や有線接続への切り替えをお試しください。<br>・ファームウェアを最新版にアップデートすることで改善するケースもあります。', manuals: ['wifi', 'firmware', 'inquiry'] },
-        freeze:    { text: '・録画データの容量不足またはSDカードの問題が考えられます。<br>・SDカードのフォーマットまたは交換をお試しください。<br>・本体の再起動で改善することもあります。', manuals: ['sdcard', 'reboot', 'inquiry'] },
-        partial:   { text: '・カメラレンズや接続端子の汚れ・破損が考えられます。<br>・レンズをやわらかいクロスで拭いてからご確認ください。<br>・それでも改善しない場合は修理対応が必要な可能性があります。', manuals: ['lens', 'repair', 'inquiry'] },
-      },
-      connect: {
-        wifi_fail: { text: '・SSIDとパスワードを再確認してください。<br>・2.4GHz / 5GHz の帯域設定が合っているかご確認ください。<br>・ルーターの再起動、または本体を工場出荷設定にリセットしてから再設定をお試しください。', manuals: ['wifi', 'reset', 'inquiry'] },
-        app_fail:  { text: '・アプリのバージョンが最新かご確認ください。<br>・スマートフォンのBluetooth・Wi-Fiをオフ→オンに切り替えてから再度ペアリングをお試しください。<br>・アプリの再インストールで解決するケースもあります。', manuals: ['app', 'pairing', 'inquiry'] },
-        disconnect:{ text: '・電波の届く範囲外に出ていないかご確認ください。<br>・電波干渉が多い環境（工場内・地下）では安定しにくい場合があります。<br>・中継器の設置や有線LAN接続への切り替えをご検討ください。', manuals: ['wifi', 'range', 'inquiry'] },
-        pc_fail:   { text: '・USBドライバーが正しくインストールされているかご確認ください。<br>・別のUSBポートやケーブルでお試しください。<br>・PCを再起動してから再接続することで認識される場合があります。', manuals: ['driver', 'usb', 'inquiry'] },
-      },
-      error: {
-        code:      { text: '・エラーコード表をもとに原因を特定できます。<br>・表示されているコードをマニュアルのエラーコード一覧と照合してください。<br>・E-001〜E-099はシステムエラー、E-100以降はハードウェアエラーを示すことが多いです。', manuals: ['errorcode', 'firmware', 'inquiry'] },
-        warning:   { text: '・警告ランプの色と点滅パターンを確認してください。<br>・赤点灯：電源・バッテリー系のエラー<br>・橙点滅：ファームウェア・設定系のエラー<br>・詳細はLEDエラーコード表をご参照ください。', manuals: ['errorcode', 'reset', 'inquiry'] },
-        freeze_err:{ text: '・本体のハードリセット（電源長押し10秒）をお試しください。<br>・それでも改善しない場合はファームウェアの再インストールをお試しください。<br>・定期的なフリーズが続く場合はメモリ不足またはハードウェア故障の可能性があります。', manuals: ['reset', 'firmware', 'inquiry'] },
-        sound:     { text: '・警告音の種類（回数・パターン）を確認してください。<br>・連続音：バッテリー切れ間近<br>・断続音：過熱警告（使用を一時中断し冷やしてください）<br>・詳細はマニュアルの警告音一覧をご参照ください。', manuals: ['errorcode', 'battery', 'inquiry'] },
-      }
-    };
-
-    const manualDB = {
-      charge:    { icon:'🔌', title:'充電・バッテリーのよくある質問', desc:'充電トラブルの対処法まとめ', href:'#' },
-      battery:   { icon:'🔋', title:'バッテリー交換・診断ガイド', desc:'バッテリー寿命の確認と交換手順（PDF）', href:'#' },
-      errorcode: { icon:'📄', title:'エラーコード・LEDランプ一覧', desc:'点滅パターン別の対処法（PDF）', href:'#' },
-      firmware:  { icon:'▶️', title:'ファームウェア更新手順（動画）', desc:'最新ファームウェアのダウンロードから適用まで', href:'#' },
-      reset:     { icon:'📋', title:'工場出荷時リセット手順書', desc:'ハードリセットの方法（データ消去注意）', href:'#' },
-      terminal:  { icon:'🔧', title:'端子クリーニング・接触不良の対処', desc:'精密機器の端子メンテナンス方法', href:'#' },
-      output:    { icon:'📺', title:'映像出力設定ガイド', desc:'出力設定の確認と変更手順', href:'#' },
-      settings:  { icon:'⚙️', title:'初期設定・各種設定マニュアル', desc:'カメラ設定の一覧と変更方法（PDF）', href:'#' },
-      wifi:      { icon:'📶', title:'Wi-Fi接続・ネットワーク設定ガイド', desc:'接続手順と帯域設定の確認方法', href:'#' },
-      sdcard:    { icon:'💾', title:'SDカード・ストレージ管理ガイド', desc:'フォーマット手順と推奨SDカード一覧', href:'#' },
-      reboot:    { icon:'🔄', title:'本体再起動・強制終了の手順', desc:'フリーズ時の対処法', href:'#' },
-      lens:      { icon:'🔍', title:'レンズ・カメラ部品のメンテナンス', desc:'クリーニング方法と定期メンテナンス', href:'#' },
-      repair:    { icon:'🛠️', title:'修理・部品交換のお申込み', desc:'保証期間・修理受付窓口のご案内', href:'#' },
-      app:       { icon:'📱', title:'アプリ設定・ペアリングガイド', desc:'スマートフォンアプリの設定手順', href:'#' },
-      pairing:   { icon:'🔗', title:'Bluetooth・Wi-Fiペアリング手順', desc:'初回接続から再ペアリングまでの手順', href:'#' },
-      range:     { icon:'📡', title:'通信範囲・電波干渉対策ガイド', desc:'安定した通信のための設置・設定のヒント', href:'#' },
-      driver:    { icon:'💻', title:'PCドライバー・ソフトウェアのダウンロード', desc:'対応OS別ドライバーインストール手順', href:'#' },
-      usb:       { icon:'🔌', title:'USB接続トラブルシューティング', desc:'PC認識不良の対処法', href:'#' },
-      inquiry:   { icon:'📞', title:'サポートへのお問い合わせ', desc:'上記で解決しない場合は担当者が対応します', href:'#' },
-    };
-
-    const fallback = { text: '詳しい状況をサポートチームにお伝えいただくと、より正確な診断が可能です。下記よりお問い合わせください。', manuals: ['inquiry'] };
-    const result = (diagnoses[sk] && diagnoses[sk][dk]) ? diagnoses[sk][dk] : fallback;
-
-    const mHTML = result.manuals.map(id => {
-      const m = manualDB[id] || manualDB.inquiry;
-      return `<a class="manual-card" href="${m.href}">
-        <div class="manual-icon">${m.icon}</div>
-        <div class="manual-body"><strong>${m.title}</strong><span>${m.desc}</span></div>
-        <svg class="manual-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </a>`;
-    }).join('');
-
-    appendAI(`
-      <p>ご回答ありがとうございました。状況を整理し、対処法をご案内します。</p>
-      <div class="result-summary">
-        <strong>📋 診断サマリー</strong>
-        症状：${ans.symptom.label}　／　製品：${ans.device.label}　／　発生時期：${ans.timing.label}　／　詳細：${ans.detail.label}
-        <br><br>${result.text}
+  } else {
+    block.innerHTML = `
+      <div class="query-label">「<span>${escHtml(query)}</span>」の検索結果</div>
+      <div class="no-match">
+        <div class="no-match-icon">🔍</div>
+        <p>「${escHtml(query)}」に一致する回答が見つかりませんでした。<br>
+        別のキーワードでお試しいただくか、Xactiサポートへお問い合わせください。</p>
       </div>
-      <div class="manual-cards">${mHTML}</div>
-      <div class="contact-banner">
-        <p><strong>解決しない場合はお気軽にご相談ください</strong>担当スタッフが詳しくサポートいたします。</p>
-        <a class="btn-contact" href="#">お問い合わせ</a>
-      </div>`);
-
-    lockInput('サポートが完了しました');
+      <div class="followup-wrap" style="margin-top:12px;">
+        <p>別のキーワードで検索する</p>
+        <div class="followup-input-row">
+          <input class="followup-input" type="text" placeholder="症状を入力…" autocomplete="off"
+            onkeydown="if(event.key==='Enter') doSearch(this.value)">
+          <button class="followup-btn" onclick="doSearch(this.previousElementSibling.value)">検索</button>
+        </div>
+      </div>`;
   }
 
-  /* ── FREE TEXT ── */
-  function handleKey(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendFree(); }
-  }
+  thread.appendChild(block);
+  setTimeout(() => block.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
 
-  function sendFree() {
-    const el = document.getElementById('chatInput');
-    const text = el.value.trim();
-    if (!text) return;
-    el.value = '';
+function onResolved(blockId) {
+  const res = document.getElementById('res-' + blockId);
+  res.innerHTML = `
+    <div class="resolved-msg">
+      <div class="resolved-msg-icon">✅</div>
+      <div>
+        <p>お役に立てて良かったです。</p>
+        <small>またいつでもご利用ください。</small>
+      </div>
+    </div>`;
+}
 
-    if (step === 1) { pickSymptom({ classList: { add: () => {} } }, 'free', text); return; }
-    if (step === 2) { pickDevice({ classList: { add: () => {} } }, 'free', text); disableQR('qr2'); return; }
-    if (step === 3) { pickTiming({ classList: { add: () => {} } }, 'free', text); disableQR('qr3'); return; }
-    if (step === 4) { pickDetail({ classList: { add: () => {} } }, 'free', text); disableQR('qr4'); return; }
-  }
+function onNotResolved(blockId) {
+  const res = document.getElementById('res-' + blockId);
+  // Disable buttons
+  res.querySelectorAll('button').forEach(b => b.disabled = true);
+
+  const followup = document.createElement('div');
+  followup.className = 'followup-wrap';
+  followup.style.marginTop = '12px';
+  followup.innerHTML = `
+    <p>別の症状や状況を入力してください</p>
+    <div class="followup-input-row">
+      <input class="followup-input" type="text" placeholder="さらに詳しく入力…" autocomplete="off"
+        onkeydown="if(event.key==='Enter') doSearch(this.value)">
+      <button class="followup-btn" onclick="doSearch(this.previousElementSibling.value)">検索</button>
+    </div>`;
+
+  document.getElementById(blockId).appendChild(followup);
+  setTimeout(() => followup.querySelector('input').focus(), 100);
+  setTimeout(() => followup.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+}
+
+// URLパラメーター読み取り → demo=1 なら「映像が映らない」を自動検索
+const params = new URLSearchParams(window.location.search);
+if (params.get('demo') === '1') {
+  const query = '映像が映らない';
+  document.getElementById('mainInput').value = query;
+  setTimeout(() => doSearch(query), 150);
+}
 </script>
 </body>
 </html>
